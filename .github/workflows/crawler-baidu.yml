@@ -50,4 +50,4 @@ jobs:
       env:
         BASE_URL: ${{secrets.BASE_URL}}
         HEADER_TOKEN: ${{secrets.HEADER_TOKEN}}
-      run: npm baidu
+      run: node baidu.js
