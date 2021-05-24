@@ -1,4 +1,5 @@
 'use strict';
+const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 const Utils = require('oen-utils');
 const UUID = require('oen-uuid');
@@ -10,6 +11,20 @@ const UUID = require('oen-uuid');
  * ps aux | grep chrome-linux | grep -v grep | awk '{print $2}' | xargs kill -9
  */
 class Chrome {
+    static async downSelector(url, waitForSelector) {
+        let page = await Chrome.down(url, waitForSelector);
+        if (Utils.isEmpty(page)) {
+            return null;
+        }
+
+        const $ = cheerio.load(page.html);
+        let selector = $(waitForSelector);
+        if (Utils.isEmpty(selector)) {
+            return null;
+        }
+        return selector;
+    }
+
     static async down(url, waitForSelector) {
         if (Utils.isEmpty(url)) {
             return null;
