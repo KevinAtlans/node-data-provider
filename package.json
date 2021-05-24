@@ -1,0 +1,26 @@
+{
+  "name": "node-data-provider",
+  "version": "1.0.0",
+  "description": "Data Provider",
+  "main": "index.js",
+  "scripts": {
+    "baidu": "node baidu.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.9",
+    "node-fetch": "^2.6.1",
+    "oen-utils": "^1.0.3",
+    "oen-uuid": "^1.0.1",
+    "puppeteer": "^9.1.1"
+  },
+  "keywords": [
+    "crawler"
+  ],
+  "author": {
+    "name": "Kevin.Xu",
+    "email": "exception@live.cn",
+    "Web Site": "www.loyom.com"
+  },
+  "license": "GPL-3.0"
+}
