@@ -66,8 +66,12 @@ class WeiboService {
             return data;
         }
 
-        data.content = Utils.trimToOne(mainBody.text());
+        let content = Utils.trimToOne(mainBody.text());
+        if (content.startsWith("导语：")) {
+            content = content.substring(3);
+        }
 
+        data.content = content;
         return data;
     }
 
