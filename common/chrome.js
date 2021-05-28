@@ -1,4 +1,5 @@
 'use strict';
+const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
 const Utils = require('oen-utils');
@@ -22,7 +23,10 @@ class Chrome {
         if (Utils.isEmpty(selector)) {
             return null;
         }
-        return selector;
+        return {
+            $: $,
+            selector: selector
+        };
     }
 
     static async down(url, waitForSelector) {
@@ -47,7 +51,7 @@ class Chrome {
                 ignoreHTTPSErrors: true,
                 defaultViewport: {
                     width: 1440,
-                    height: 2000,
+                    height: 15000,
                 },
                 timeout: 10000,
             });
@@ -120,6 +124,18 @@ class Chrome {
             }
         }
         return null;
+    }
+
+    static async fetchBaiduRedirect(url) {
+        return await fetch(url).then(data => data.text()).then(html => {
+            let start = html.indexOf('content="0;URL=') + 16;
+            let end = html.indexOf('"></noscript>') - 1;
+            let content = html.substring(start, end);
+            return content;
+        }).catch(reason => {
+            return url;
+        });
+
     }
 }
 

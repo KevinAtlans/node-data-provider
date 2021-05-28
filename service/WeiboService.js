@@ -5,7 +5,7 @@ const Utils = require('oen-utils');
 const Chrome = require('../common/chrome');
 const Request = require('../common/request');
 
-class BaiduService {
+class WeiboService {
     async _down_weibo_realtimehot() {
         let url = "https://s.weibo.com/top/summary?cate=realtimehot";
         let mainBodySelector = "div[class=m-main] > div[class=m-wrap] > div[class=data] > table";
@@ -89,4 +89,4 @@ class BaiduService {
 }
 
 
-module.exports = BaiduService
+module.exports = WeiboService
