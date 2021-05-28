@@ -42,7 +42,7 @@ class BaiduService {
         return list;
     }
 
-    async _down_baidu_page_detail(url) {
+    async _down_baidu_baijiahao_detail(url) {
         if (Utils.isEmpty(url)) {
             return null;
         }
@@ -78,6 +78,22 @@ class BaiduService {
                 content: content
             };
         }
+        return null;
+    }
+
+    async _down_baidu_page_detail(url) {
+        if (Utils.isEmpty(url)) {
+            return null;
+        }
+        let newUrl = await Chrome.fetchBaiduRedirect(url);
+        if (Utils.isEmpty(newUrl)) {
+            return null;
+        }
+
+        if (newUrl.includes('baijiahao.baidu.com')) {
+            return this._down_baidu_baijiahao_detail(newUrl);
+        }
+
         return null;
     }
 
