@@ -85,12 +85,13 @@ class BaiduService {
         if (Utils.isEmpty(url)) {
             return null;
         }
+
         let newUrl = await Chrome.fetchBaiduRedirect(url);
         if (Utils.isEmpty(newUrl)) {
             return null;
         }
 
-        if (newUrl.includes('baijiahao.baidu.com')) {
+        if (newUrl.includes('baidu.com')) {
             return this._down_baidu_baijiahao_detail(newUrl);
         }
 
