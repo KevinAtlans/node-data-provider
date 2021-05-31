@@ -119,10 +119,32 @@ class BilibiliService {
         data.pubdate = jData.pubdate;
         data.ctime = jData.ctime;
         data.duration = jData.duration;
-        data.owner = jData.owner;
-        data.stat = jData.stat;
         data.dynamic = jData.dynamic;
-        data.dimension = jData.dimension;
+
+        if (!Utils.isEmpty(jData.owner)) {
+            data.authorMid = jData.owner.mid;
+            data.authorName = jData.owner.name;
+            data.authorFace = jData.owner.face;
+        }
+
+        if (!Utils.isEmpty(jData.stat)) {
+            data.statView = jData.stat.view;
+            data.statDanmaku = jData.stat.danmaku;
+            data.statReply = jData.stat.reply;
+            data.statFavorite = jData.stat.favorite;
+            data.statCoin = jData.stat.coin;
+            data.statShare = jData.stat.share;
+            data.statViewNowRank = jData.stat.now_rank;
+            data.statHisRank = jData.stat.his_rank;
+            data.statLike = jData.stat.like;
+            data.statDislike = jData.stat.dislike;
+        }
+
+        if (!Utils.isEmpty(jData.dimension)) {
+            data.dimensionWidth = jData.dimension.width;
+            data.dimensionHeight = jData.dimension.height;
+            data.dimensionRotate = jData.dimension.rotate;
+        }
         return data;
     }
 
@@ -141,6 +163,7 @@ class BilibiliService {
             let newData = await this._down_video_detail(data);
             console.log("-----------------------------------------------------------------");
             console.log(newData);
+            return;
         }
     }
 }
