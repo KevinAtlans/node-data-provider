@@ -47,7 +47,7 @@ class BilibiliService {
                 if (!Utils.isEmpty(video_url)) {
                     let video_bid = video_url.substring(video_url.lastIndexOf("/") + 1);
                     list.push({
-                        source: "bilibili",
+                        dataSource: "bilibili",
                         bvid: video_bid,
                         url: video_url,
                         tag: video_tag,
@@ -151,19 +151,20 @@ class BilibiliService {
     async down() {
         let rank = [];
         let popular = await this._down_popular_all();
-        // let rank = await this._down_rank_all();
+        let rank = await this._down_rank_all();
         let list = popular.concat(rank);
 
         if (Utils.isEmpty(list)) {
             return;
         }
 
-
         for (let data of list) {
             let newData = await this._down_video_detail(data);
-            console.log("-----------------------------------------------------------------");
-            console.log(newData);
-            return;
+            if (!Utils.isEmpty(newData)) {
+                Utils.safeRun(() => {
+                    Request.postWithBase("/api/bili-video-info/add", newData);
+                });
+            }
         }
     }
 }
