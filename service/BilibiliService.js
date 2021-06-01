@@ -149,7 +149,6 @@ class BilibiliService {
     }
 
     async down() {
-        let rank = [];
         let popular = await this._down_popular_all();
         let rank = await this._down_rank_all();
         let list = popular.concat(rank);
