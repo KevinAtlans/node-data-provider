@@ -204,7 +204,6 @@ class BaiduService {
                     Request.postWithBase("/api/hot-news/add", newData);
                 });
             }
-            return;
         }
     }
 }

@@ -91,7 +91,6 @@ class BilibiliService {
                 }
             });
         }
-        console.log(list);
         return list;
     }
 
