@@ -2,7 +2,7 @@
 
 const Utils = require('oen-utils');
 const Chrome = require('../common/chrome');
-
+const Request = require('../common/request');
 class BaiduService {
     async _down_top_baidu() {
         let url = "http://top.baidu.com/buzz?b=1&fr=topindex";

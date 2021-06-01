@@ -1,6 +1,5 @@
 'use strict';
 
-const cheerio = require('cheerio');
 const Utils = require('oen-utils');
 const fetch = require('node-fetch');
 const Chrome = require('../common/chrome');
