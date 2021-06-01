@@ -25,6 +25,8 @@ class Chrome {
         }
         return {
             $: $,
+            pageUrl: page.url,
+            pageTitle: page.title,
             selector: selector
         };
     }
@@ -128,6 +130,7 @@ class Chrome {
 
     static async fetchBaiduRedirect(url) {
         return await fetch(url).then(data => data.text()).then(html => {
+            console.log("html: ", html);
             let start = html.indexOf('content="0;URL=') + 16;
             let end = html.indexOf('"></noscript>') - 1;
             let content = html.substring(start, end);

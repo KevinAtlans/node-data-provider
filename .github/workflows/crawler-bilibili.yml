@@ -7,7 +7,7 @@ on:
     - cron: '30 0/1 * * *'
 
 jobs:
-  crawler-news-job:
+  bilibili-video-job:
 
     runs-on: ubuntu-latest
 
@@ -25,7 +25,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    # .Net 环境
+    # NodeJS 环境
     - name: Setup NodeJS
       uses: actions/setup-node@v1
       with:

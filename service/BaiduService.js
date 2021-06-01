@@ -1,39 +1,34 @@
 'use strict';
 
-const cheerio = require('cheerio');
 const Utils = require('oen-utils');
 const Chrome = require('../common/chrome');
-const Request = require('../common/request');
 
 class BaiduService {
     async _down_top_baidu() {
         let url = "http://top.baidu.com/buzz?b=1&fr=topindex";
         let mainBodySelector = "div[id=main] > div[class=mainBody] > div[class=grayborder] > table[class=list-table]";
 
-        let page = await Chrome.down(url, mainBodySelector);
-        if (Utils.isEmpty(page)) {
+        let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
+        if (Utils.isEmpty(selector)) {
             return null;
         }
 
-        const $ = cheerio.load(page.html);
-        let mainBody = $(mainBodySelector);
-        if (Utils.isEmpty(mainBody)) {
-            return null;
-        }
-
-        var trNodes = mainBody.find("tbody > tr");
+        var trNodes = selector.find("tbody > tr");
         let list = [];
         if (trNodes) {
             trNodes.each((i, ele) => {
                 let tr = $(ele);
                 let idx = parseInt(Utils.trimToOne(tr.find('td[class=first] > span').text()));
-                let title = Utils.trimToOne(tr.find('td[class=keyword] > a[class=list-title]').text());
+                let a = tr.find('td[class=keyword] > a[class=list-title]');
+                let title = Utils.trimToOne(a.text());
+                let href = Utils.trimToOne(a.attr("href"));
                 let hot = parseInt(Utils.trimToOne(tr.find('td[class=last]').text()));
                 if (!Utils.isEmpty(title)) {
                     list.push({
                         source: "baidu",
                         rank: idx,
                         title: title,
+                        href: href,
                         hotValue: hot
                     });
                 }
@@ -42,35 +37,90 @@ class BaiduService {
         return list;
     }
 
-    async _down_baidu_baijiahao_detail(url) {
+    async _down_baidu_page_detail(url) {
         if (Utils.isEmpty(url)) {
             return null;
         }
 
-        let mainBodySelector = "div[id=app] > div[id=ssr-content-wrapper] > div[id=ssr-content]";
-        let page = await Chrome.down(url, mainBodySelector);
-        if (Utils.isEmpty(page)) {
+        let mainBodySelector = "html > body";
+        let { $, pageUrl, selector } = await Chrome.downSelector(url, mainBodySelector);
+        if (Utils.isEmpty(selector)) {
             return null;
         }
 
-        let pageUrl = page.url;
-        if (pageUrl.startsWith("https://baijiahao.baidu.com/")) {
-            const $ = cheerio.load(page.html);
-            let mainBody = $(mainBodySelector);
-            if (Utils.isEmpty(mainBody)) {
-                return null;
-            }
 
-            let title = Utils.trimToOne(mainBody.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > h2[class^=index-module_articleTitle]").text());
-            let author = Utils.trimToOne(mainBody.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > div[class^=index-module_articleDesc] > div[class^=index-module_authorTxt] > a > p").text());
-            let pList = mainBody.find("div[class^=app-module_articleWrapper] > div[class^=app-module_leftSection] > div[class^=index-module_articleWrap] > div[class^=index-module_textWrap] > p");
+
+        if (pageUrl.startsWith("https://baijiahao.baidu.com/")) {
+            let title = Utils.trimToOne(selector.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > h2[class^=index-module_articleTitle]").text());
+            let author = Utils.trimToOne(selector.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > div[class^=index-module_articleDesc] > div[class^=index-module_authorTxt] > a > p").text());
+            let pList = selector.find("div[class^=app-module_articleWrapper] > div[class^=app-module_leftSection] > div[class^=index-module_articleWrap] > div[class^=index-module_textWrap] > p");
             let content = "";
             if (pList) {
                 pList.each((i, ele) => {
                     let p = $(ele);
-                    content += (Utils.trimToOne(p.text()) + "\n");
+                    let pt = Utils.trimToOne(p.text());
+                    if (!Utils.isEmpty(pt)) {
+                        content += (pt + "\n");
+                    }
                 });
             }
+            return {
+                url: pageUrl,
+                title: title,
+                author: author,
+                content: content
+            };
+        } else if (pageUrl.startsWith("https://www.163.com/dy/article")) {
+            let title = Utils.trimToOne(selector.find("div[class='wrapper clearfix'] > div[class=post_main] > h1[class=post_title]").text());
+            let author = Utils.trimToOne(selector.find("div[class='wrapper clearfix'] > div[class=post_main] > div[class=post_info]").text());
+            if (!Utils.isEmpty(author)) {
+                if (author.includes("来源:")) {
+                    author = Utils.trimToOne(author.substring(author.indexOf("来源:") + 3));
+                }
+            }
+
+            let pList = selector.find("div[class='wrapper clearfix'] > div[class=post_main] > div[class=post_content] > div[class=post_body] > p");
+            let content = "";
+            if (pList) {
+                pList.each((i, ele) => {
+                    let p = $(ele);
+                    let pt = Utils.trimToOne(p.text());
+                    if (!Utils.isEmpty(pt)) {
+                        content += (pt + "\n");
+                    }
+                });
+            }
+
+            return {
+                url: pageUrl,
+                title: title,
+                author: author,
+                content: content
+            };
+        } else if (pageUrl.startsWith("https://new.qq.com/omn")) {
+            let title = Utils.trimToOne(selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > h1").text());
+            let author = Utils.trimToOne(selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > div[class='content clearfix'] > div[id=LeftTool] > div[left-stick-wp] > div[data-bossirs=ly] > a[class=author] > div").text());
+            let pList = selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > div[class='content clearfix'] > div[class=content-article] > p");
+            let content = "";
+            if (pList) {
+                pList.each((i, ele) => {
+                    let p = $(ele);
+                    let pt = Utils.trimToOne(p.text());
+                    if (!Utils.isEmpty(pt)) {
+                        content += (pt + "\n");
+                    }
+                });
+            }
+            return {
+                url: pageUrl,
+                title: title,
+                author: author,
+                content: content
+            };
+        } else if (pageUrl.startsWith("https://www.thepaper.cn/newsDetail")) {
+            let title = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > h1[class=news_title]").text());
+            let author = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > div[class='news_paike_author clearfix'] > a > div[class=name]").text());
+            let content = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > div[class=news_txt]").text());
             return {
                 url: pageUrl,
                 title: title,
@@ -81,44 +131,24 @@ class BaiduService {
         return null;
     }
 
-    async _down_baidu_page_detail(url) {
-        if (Utils.isEmpty(url)) {
-            return null;
-        }
-
-        let newUrl = await Chrome.fetchBaiduRedirect(url);
-        if (Utils.isEmpty(newUrl)) {
-            return null;
-        }
-
-        if (newUrl.includes('baidu.com')) {
-            return this._down_baidu_baijiahao_detail(newUrl);
-        }
-
-        return null;
-    }
-
     async _down_data_detail(data) {
         if (Utils.isEmpty(data)) {
             return null;
         }
+        let url = data.href;
+        if (Utils.isEmpty(url)) {
+            let title = data.title;
+            url = "https://www.baidu.com/s?wd=" + encodeURIComponent(title);
+        }
 
-        let title = data.title;
-        let url = "https://www.baidu.com/s?wd=" + encodeURIComponent(title);
         let mainBodySelector = "div[id=container] > div[id=content_left]";
-        let page = await Chrome.down(url, mainBodySelector);
-        if (Utils.isEmpty(page)) {
-            return data;
+        let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
+        if (Utils.isEmpty(selector)) {
+            return null;
         }
-
-        const $ = cheerio.load(page.html);
-        let mainBody = $(mainBodySelector);
-        if (Utils.isEmpty(mainBody)) {
-            return data;
-        }
-
-        var listNodes = mainBody.find("div[class='result c-container new-pmd'] > h3[class=t] > a");
         let hrefs = [];
+
+        var listNodes = selector.find("div[class='c-group-wrapper'] > div[class='result-op c-container xpath-log new-pmd'] > div > div[class^=img-content-container] > div[class=c-row] > div[class=c-span-last] > span[class^=title] > a");
         listNodes.each((i, ele) => {
             let node = $(ele);
             let href = node.attr("href");
@@ -126,6 +156,25 @@ class BaiduService {
                 hrefs.push(href);
             }
         });
+
+        listNodes = selector.find("div[class='c-group-wrapper'] > div[class='result-op c-container new-pmd xpath-log'] > div[class=new-pmd] > div[class^=c-row] > div[class='op_sp_realtime_group_title_new op-realtime-new-union c-span9 c-span-last'] > a[class='op_sp_realtime_new_group_title_text']");
+        listNodes.each((i, ele) => {
+            let node = $(ele);
+            let href = node.attr("href");
+            if (!Utils.isEmpty(href)) {
+                hrefs.push(href);
+            }
+        });
+
+        listNodes = selector.find("div[class='result c-container new-pmd'] > h3[class=t] > a");
+        listNodes.each((i, ele) => {
+            let node = $(ele);
+            let href = node.attr("href");
+            if (!Utils.isEmpty(href)) {
+                hrefs.push(href);
+            }
+        });
+
 
         for (let href of hrefs) {
             let dataDetail = await this._down_baidu_page_detail(href);
@@ -155,9 +204,9 @@ class BaiduService {
                     Request.postWithBase("/api/hot-news/add", newData);
                 });
             }
+            return;
         }
     }
 }
-
 
 module.exports = BaiduService
