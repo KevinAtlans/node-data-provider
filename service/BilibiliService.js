@@ -83,7 +83,7 @@ class BilibiliService {
                 if (!Utils.isEmpty(video_url)) {
                     let video_bid = video_url.substring(video_url.lastIndexOf("/") + 1);
                     list.push({
-                        source: "bilibili",
+                        dataSource: "bilibili",
                         rankIdx: video_rank_idx,
                         bvid: video_bid,
                         url: video_url,
