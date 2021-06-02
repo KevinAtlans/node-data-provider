@@ -41,92 +41,94 @@ class BaiduService {
         if (Utils.isEmpty(url)) {
             return null;
         }
+        try {
 
-        let mainBodySelector = "html > body";
-        let { $, pageUrl, selector } = await Chrome.downSelector(url, mainBodySelector);
-        if (Utils.isEmpty(selector)) {
-            return null;
-        }
-
-
-
-        if (pageUrl.startsWith("https://baijiahao.baidu.com/")) {
-            let title = Utils.trimToOne(selector.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > h2[class^=index-module_articleTitle]").text());
-            let author = Utils.trimToOne(selector.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > div[class^=index-module_articleDesc] > div[class^=index-module_authorTxt] > a > p").text());
-            let pList = selector.find("div[class^=app-module_articleWrapper] > div[class^=app-module_leftSection] > div[class^=index-module_articleWrap] > div[class^=index-module_textWrap] > p");
-            let content = "";
-            if (pList) {
-                pList.each((i, ele) => {
-                    let p = $(ele);
-                    let pt = Utils.trimToOne(p.text());
-                    if (!Utils.isEmpty(pt)) {
-                        content += (pt + "\n");
-                    }
-                });
+            let mainBodySelector = "html > body";
+            let { $, pageUrl, selector } = await Chrome.downSelector(url, mainBodySelector);
+            if (Utils.isEmpty($) || Utils.isEmpty(pageUrl) || Utils.isEmpty(selector)) {
+                return null;
             }
-            return {
-                url: pageUrl,
-                title: title,
-                author: author,
-                content: content
-            };
-        } else if (pageUrl.startsWith("https://www.163.com/dy/article")) {
-            let title = Utils.trimToOne(selector.find("div[class='wrapper clearfix'] > div[class=post_main] > h1[class=post_title]").text());
-            let author = Utils.trimToOne(selector.find("div[class='wrapper clearfix'] > div[class=post_main] > div[class=post_info]").text());
-            if (!Utils.isEmpty(author)) {
-                if (author.includes("来源:")) {
-                    author = Utils.trimToOne(author.substring(author.indexOf("来源:") + 3));
+
+            if (pageUrl.startsWith("https://baijiahao.baidu.com/")) {
+                let title = Utils.trimToOne(selector.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > h2[class^=index-module_articleTitle]").text());
+                let author = Utils.trimToOne(selector.find("div[class^=app-module_headerWrapper] > div[class^=index-module_headerWrap] > div[class^=index-module_articleDesc] > div[class^=index-module_authorTxt] > a > p").text());
+                let pList = selector.find("div[class^=app-module_articleWrapper] > div[class^=app-module_leftSection] > div[class^=index-module_articleWrap] > div[class^=index-module_textWrap] > p");
+                let content = "";
+                if (pList) {
+                    pList.each((i, ele) => {
+                        let p = $(ele);
+                        let pt = Utils.trimToOne(p.text());
+                        if (!Utils.isEmpty(pt)) {
+                            content += (pt + "\n");
+                        }
+                    });
                 }
-            }
-
-            let pList = selector.find("div[class='wrapper clearfix'] > div[class=post_main] > div[class=post_content] > div[class=post_body] > p");
-            let content = "";
-            if (pList) {
-                pList.each((i, ele) => {
-                    let p = $(ele);
-                    let pt = Utils.trimToOne(p.text());
-                    if (!Utils.isEmpty(pt)) {
-                        content += (pt + "\n");
+                return {
+                    url: pageUrl,
+                    title: title,
+                    author: author,
+                    content: content
+                };
+            } else if (pageUrl.startsWith("https://www.163.com/dy/article")) {
+                let title = Utils.trimToOne(selector.find("div[class='wrapper clearfix'] > div[class=post_main] > h1[class=post_title]").text());
+                let author = Utils.trimToOne(selector.find("div[class='wrapper clearfix'] > div[class=post_main] > div[class=post_info]").text());
+                if (!Utils.isEmpty(author)) {
+                    if (author.includes("来源:")) {
+                        author = Utils.trimToOne(author.substring(author.indexOf("来源:") + 3));
                     }
-                });
-            }
+                }
 
-            return {
-                url: pageUrl,
-                title: title,
-                author: author,
-                content: content
-            };
-        } else if (pageUrl.startsWith("https://new.qq.com/omn")) {
-            let title = Utils.trimToOne(selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > h1").text());
-            let author = Utils.trimToOne(selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > div[class='content clearfix'] > div[id=LeftTool] > div[left-stick-wp] > div[data-bossirs=ly] > a[class=author] > div").text());
-            let pList = selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > div[class='content clearfix'] > div[class=content-article] > p");
-            let content = "";
-            if (pList) {
-                pList.each((i, ele) => {
-                    let p = $(ele);
-                    let pt = Utils.trimToOne(p.text());
-                    if (!Utils.isEmpty(pt)) {
-                        content += (pt + "\n");
-                    }
-                });
+                let pList = selector.find("div[class='wrapper clearfix'] > div[class=post_main] > div[class=post_content] > div[class=post_body] > p");
+                let content = "";
+                if (pList) {
+                    pList.each((i, ele) => {
+                        let p = $(ele);
+                        let pt = Utils.trimToOne(p.text());
+                        if (!Utils.isEmpty(pt)) {
+                            content += (pt + "\n");
+                        }
+                    });
+                }
+
+                return {
+                    url: pageUrl,
+                    title: title,
+                    author: author,
+                    content: content
+                };
+            } else if (pageUrl.startsWith("https://new.qq.com/omn")) {
+                let title = Utils.trimToOne(selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > h1").text());
+                let author = Utils.trimToOne(selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > div[class='content clearfix'] > div[id=LeftTool] > div[left-stick-wp] > div[data-bossirs=ly] > a[class=author] > div").text());
+                let pList = selector.find("div[class='qq_conent clearfix'] > div[class=LEFT] > div[class='content clearfix'] > div[class=content-article] > p");
+                let content = "";
+                if (pList) {
+                    pList.each((i, ele) => {
+                        let p = $(ele);
+                        let pt = Utils.trimToOne(p.text());
+                        if (!Utils.isEmpty(pt)) {
+                            content += (pt + "\n");
+                        }
+                    });
+                }
+                return {
+                    url: pageUrl,
+                    title: title,
+                    author: author,
+                    content: content
+                };
+            } else if (pageUrl.startsWith("https://www.thepaper.cn/newsDetail")) {
+                let title = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > h1[class=news_title]").text());
+                let author = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > div[class='news_paike_author clearfix'] > a > div[class=name]").text());
+                let content = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > div[class=news_txt]").text());
+                return {
+                    url: pageUrl,
+                    title: title,
+                    author: author,
+                    content: content
+                };
             }
-            return {
-                url: pageUrl,
-                title: title,
-                author: author,
-                content: content
-            };
-        } else if (pageUrl.startsWith("https://www.thepaper.cn/newsDetail")) {
-            let title = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > h1[class=news_title]").text());
-            let author = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > div[class='news_paike_author clearfix'] > a > div[class=name]").text());
-            let content = Utils.trimToOne(selector.find("div[class='bdwd main clearfix newDetail_sparker'] > div[class=main_lt] > div[class=newscontent] > div[class=news_txt]").text());
-            return {
-                url: pageUrl,
-                title: title,
-                author: author,
-                content: content
-            };
+        } catch (e) {
+            console.error(e);
         }
         return null;
     }
