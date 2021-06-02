@@ -145,7 +145,7 @@ class BaiduService {
 
         let mainBodySelector = "div[id=container] > div[id=content_left]";
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
-        if (Utils.isEmpty(selector)) {
+        if (Utils.isEmpty($) || Utils.isEmpty(selector)) {
             return null;
         }
         let hrefs = [];
@@ -199,12 +199,16 @@ class BaiduService {
         }
 
         for (let data of list) {
-            let newData = await this._down_data_detail(data);
-            if (!Utils.isEmpty(newData)) {
-                Utils.safeRun(() => {
-                    console.log(newData);
-                    Request.postWithBase("/api/hot-news/add", newData);
-                });
+            try {
+                let newData = await this._down_data_detail(data);
+                if (!Utils.isEmpty(newData)) {
+                    Utils.safeRun(() => {
+                        console.log(newData);
+                        Request.postWithBase("/api/hot-news/add", newData);
+                    });
+                }
+            } catch (e) {
+                console.error(e);
             }
         }
     }
