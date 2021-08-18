@@ -74,9 +74,9 @@ class BeikeService {
     }
 
     async down() {
-        for (var i = 1; i < 50; i++) {
+        for (var i = 1; i < 20; i++) {
             try {
-                await Utils.sleep(UUID.random(20000, 50000));
+                await Utils.sleep(UUID.random(10000, 50000));
                 let url = BASE_URL + "/pg" + i + "co32/"
                 await this._down_new_page(url);
             } catch (e) {

@@ -4,7 +4,7 @@ name: beike-house-provider
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 0/1 * * *'
+    - cron: '30 */4 * * *'
 
 jobs:
   bilibili-video-job:
