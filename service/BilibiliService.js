@@ -28,7 +28,7 @@ class BilibiliService {
     async _down_popular_all() {
         let list = [];
         let url = "https://www.bilibili.com/v/popular/all";
-        let mainBodySelector = "div[id=app] > div[class='popular-video-container popular-list'] > div[class=flow-loader]";
+        let mainBodySelector = "div[id=app] > div[class='popular-container'] > div[class='popular-video-container popular-list'] > div[class=flow-loader]";
 
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
         if (Utils.isEmpty(selector)) {

@@ -8,7 +8,7 @@ const Request = require('../common/request');
 class WeiboService {
     async _down_weibo_realtimehot() {
         let url = "https://s.weibo.com/top/summary?cate=realtimehot";
-        let mainBodySelector = "div[class=m-main] > div[class=m-wrap] > div[class=data] > table";
+        let mainBodySelector = "div[class=m-main] > div[class='woo-box-flex']  > div[class=m-wrap] > div[class=data] > table";
 
         let page = await Chrome.down(url, mainBodySelector);
         if (Utils.isEmpty(page)) {

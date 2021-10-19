@@ -5,30 +5,36 @@ const Chrome = require('../common/chrome');
 const Request = require('../common/request');
 class BaiduService {
     async _down_top_baidu() {
-        let url = "http://top.baidu.com/buzz?b=1&fr=topindex";
-        let mainBodySelector = "div[id=main] > div[class=mainBody] > div[class=grayborder] > table[class=list-table]";
+        let url = "https://top.baidu.com/board?tab=realtime";
+        let mainBodySelector = "div[id=sanRoot] > main > div[class^='container right-container'] > div[class^=container-bg]";
 
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
         if (Utils.isEmpty(selector)) {
             return null;
         }
 
-        var trNodes = selector.find("tbody > tr");
+        var trNodes = selector.find("div > div[class^=category-wrap]");
         let list = [];
         if (trNodes) {
             trNodes.each((i, ele) => {
                 let tr = $(ele);
-                let idx = parseInt(Utils.trimToOne(tr.find('td[class=first] > span').text()));
-                let a = tr.find('td[class=keyword] > a[class=list-title]');
-                let title = Utils.trimToOne(a.text());
+                console.log(tr.text())
+                let a = tr.find("a[class^=img-wrapper]");
+                let idx = parseInt(Utils.trimToOne(a.find('div[class^=index]').text()));
+                let title = Utils.trimToOne(tr.find('div[class^=content] > a[class^=title] > div[class=c-single-text-ellipsis]').text());
+                let content = Utils.trimToOne(tr.find('div[class^=content] > div[class^=hot-desc]').text());
+                if (Utils.isEmpty(content)) {
+                    content = contesnt.replace("查看更多>", "");
+                }
                 let href = Utils.trimToOne(a.attr("href"));
-                let hot = parseInt(Utils.trimToOne(tr.find('td[class=last]').text()));
+                let hot = parseInt(Utils.trimToOne(tr.find('div[class^=trend] > div[class^=hot-index]').text()));
                 if (!Utils.isEmpty(title)) {
                     list.push({
                         source: "baidu",
                         rank: idx,
                         title: title,
                         href: href,
+                        content: content,
                         hotValue: hot
                     });
                 }
