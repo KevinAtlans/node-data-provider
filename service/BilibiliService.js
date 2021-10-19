@@ -63,7 +63,7 @@ class BilibiliService {
         let self = this;
         let list = [];
         let url = "https://www.bilibili.com/v/popular/rank/all";
-        let mainBodySelector = "div[id=app] > div[class='rank-container'] > div[class=rank-list-wrap]";
+        let mainBodySelector = "div[id=app] > div[class=popular-container] > div[class='rank-container'] > div[class=rank-list-wrap]";
 
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
         if (Utils.isEmpty(selector)) {

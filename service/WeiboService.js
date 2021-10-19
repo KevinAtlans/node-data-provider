@@ -54,7 +54,7 @@ class WeiboService {
         }
 
         let url = data.url;
-        let mainBodySelector = "div[class=m-main] > div[id=pl_feed_main] > div[class=m-wrap] > div[class=m-con-l] > div > div[class=card-wrap] > div > p";
+        let mainBodySelector = "div[class=m-main] > div[class=woo-box-flex] > div[id=pl_feed_main] > div[id=pl_feedlist_index] > div[class=card-wrap] > div > p";
         let page = await Chrome.down(url, mainBodySelector);
         if (Utils.isEmpty(page)) {
             return data;
