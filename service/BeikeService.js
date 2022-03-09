@@ -53,6 +53,7 @@ class BeikeService {
                 var priceStr = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='unitPrice'] > span").text());
                 if (!Utils.isEmpty(priceStr)) {
                     priceStr = priceStr.replace("单价", "");
+                    priceStr = priceStr.replace("参考价:", "");
                 }
 
                 list.push({
