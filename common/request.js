@@ -18,7 +18,7 @@ class Request {
             });
     }
 
-    static async postWithBase(url, data) {
+    static async postWithBase(type, data) {
         let BASE_URL = process.env.BASE_URL;
 
         if (!BASE_URL) {
@@ -32,10 +32,10 @@ class Request {
             console.error("未配置提交认证TOKEN，提交失败！");
             return null;
         }
-
-        return await Request.post(BASE_URL + url, HEADER_TOKEN, data)
+        let json = JSON.stringify(data);
+        console.log("Post Type: " + type + " : " + json)
+        return await Request.post(BASE_URL, HEADER_TOKEN, { type: type, data: json })
     }
 }
-
 
 module.exports = Request

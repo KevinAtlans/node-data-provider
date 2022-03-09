@@ -12,9 +12,7 @@ class BeikeService {
         if (datas) {
             for (let data of datas) {
                 Utils.safeRun(() => {
-                    console.log("---- POST DATA ----");
-                    console.log(data);
-                    Request.postWithBase("/api/house-beike/add", data);
+                    Request.postWithBase("beike-house", data);
                 });
             }
         }
@@ -58,10 +56,10 @@ class BeikeService {
                 }
 
                 list.push({
-                    dataSource: "BEIKE",
-                    url: href,
+                    dataOrigin: "BEIKE",
+                    dataUrl: href,
                     title: title,
-                    address: address,
+                    houseAddress: address,
                     info: houseInfo,
                     total: totalPrice,
                     price: price,

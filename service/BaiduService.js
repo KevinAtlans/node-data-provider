@@ -30,10 +30,10 @@ class BaiduService {
                 let hot = parseInt(Utils.trimToOne(tr.find('div[class^=trend] > div[class^=hot-index]').text()));
                 if (!Utils.isEmpty(title)) {
                     list.push({
-                        source: "baidu",
-                        rank: idx,
+                        dataOrigin: "baidu",
+                        dataRank: idx,
                         title: title,
-                        href: href,
+                        dataUrl: href,
                         content: content,
                         hotValue: hot
                     });
@@ -143,7 +143,7 @@ class BaiduService {
         if (Utils.isEmpty(data)) {
             return null;
         }
-        let url = data.href;
+        let url = data.dataUrl;
         if (Utils.isEmpty(url)) {
             let title = data.title;
             url = "https://www.baidu.com/s?wd=" + encodeURIComponent(title);
@@ -190,7 +190,7 @@ class BaiduService {
                 data.subTitle = dataDetail.title;
                 data.author = dataDetail.author;
                 data.content = dataDetail.content;
-                data.url = dataDetail.url;
+                data.dataUrl = dataDetail.url;
                 return data;
             }
         }
@@ -210,7 +210,7 @@ class BaiduService {
                 if (!Utils.isEmpty(newData)) {
                     Utils.safeRun(() => {
                         console.log(newData);
-                        Request.postWithBase("/api/hot-news/add", newData);
+                        Request.postWithBase("baidu-news", newData);
                     });
                 }
             } catch (e) {

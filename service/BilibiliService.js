@@ -46,9 +46,9 @@ class BilibiliService {
                 if (!Utils.isEmpty(video_url)) {
                     let video_bid = video_url.substring(video_url.lastIndexOf("/") + 1);
                     list.push({
-                        dataSource: "bilibili",
+                        dataOrigin: "bilibili",
                         bvid: video_bid,
-                        url: video_url,
+                        dataUrl: video_url,
                         tag: video_tag,
                     });
                 }
@@ -82,10 +82,10 @@ class BilibiliService {
                 if (!Utils.isEmpty(video_url)) {
                     let video_bid = video_url.substring(video_url.lastIndexOf("/") + 1);
                     list.push({
-                        dataSource: "bilibili",
+                        dataOrigin: "bilibili",
                         rankIdx: video_rank_idx,
                         bvid: video_bid,
-                        url: video_url,
+                        dataUrl: video_url,
                         hotValue: video_hot_value
                     });
                 }
@@ -111,13 +111,13 @@ class BilibiliService {
         data.cid = jData.cid;
         data.tid = jData.tid;
         data.title = jData.title;
-        data.desc = jData.desc;
+        data.videoDesc = jData.desc;
         data.tname = jData.tname;
         data.cover = jData.pic;
         data.pubdate = jData.pubdate;
         data.ctime = jData.ctime;
         data.duration = jData.duration;
-        data.dynamic = jData.dynamic;
+        data.dynamicContent = jData.dynamic;
 
         if (!Utils.isEmpty(jData.owner)) {
             data.authorMid = jData.owner.mid;
@@ -159,7 +159,7 @@ class BilibiliService {
             let newData = await this._down_video_detail(data);
             if (!Utils.isEmpty(newData)) {
                 Utils.safeRun(() => {
-                    Request.postWithBase("/api/bili-video-info/add", newData);
+                    Request.postWithBase("bilibili-video", newData);
                 });
             }
         }

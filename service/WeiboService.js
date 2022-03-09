@@ -35,10 +35,10 @@ class WeiboService {
 
                 if (!Utils.isEmpty(title) && !Utils.isEmpty(hot)) {
                     list.push({
-                        source: "weibo",
-                        rank: idx,
+                        dataOrigin: "weibo",
+                        dataUrl: "https://s.weibo.com" + href,
+                        dataRank: idx,
                         title: title,
-                        url: "https://s.weibo.com" + href,
                         hotValue: hot
                     });
                 }
@@ -53,7 +53,7 @@ class WeiboService {
             return null;
         }
 
-        let url = data.url;
+        let url = data.dataUrl;
         let mainBodySelector = "div[class=m-main] > div[class=woo-box-flex] > div[id=pl_feed_main] > div[id=pl_feedlist_index] > div[class=card-wrap] > div > p";
         let page = await Chrome.down(url, mainBodySelector);
         if (Utils.isEmpty(page)) {
@@ -85,7 +85,7 @@ class WeiboService {
             if (!Utils.isEmpty(newData)) {
                 Utils.safeRun(() => {
                     console.log(newData);
-                    Request.postWithBase("/api/hot-news/add", newData);
+                    Request.postWithBase("weibo-news", newData);
                 });
             }
         }
