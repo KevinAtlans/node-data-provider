@@ -6,7 +6,20 @@ const Chrome = require('../common/chrome');
 const Request = require('../common/request');
 
 class WeiboService {
+
+    toInt(data) {
+        if (!data) {
+            return 0;
+        }
+        var num = data.match(/\d+/g).join('');
+        if (num && num.length > 0) {
+            return parseInt(num);
+        }
+        return 0;
+    }
+
     async _down_weibo_realtimehot() {
+        let self = this;
         let url = "https://s.weibo.com/top/summary?cate=realtimehot";
         let mainBodySelector = "div[class=m-main] > div[class='woo-box-flex']  > div[class=m-wrap] > div[class=data] > table";
 
@@ -39,7 +52,7 @@ class WeiboService {
                         dataUrl: "https://s.weibo.com" + href,
                         dataRank: idx,
                         title: title,
-                        hotValue: hot
+                        hotValue: self.toInt(hot)
                     });
                 }
             });
