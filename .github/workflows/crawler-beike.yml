@@ -7,7 +7,7 @@ on:
     - cron: '30 */4 * * *'
 
 jobs:
-  bilibili-video-job:
+  beike-house-job:
 
     runs-on: ubuntu-latest
 
