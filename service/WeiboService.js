@@ -7,16 +7,7 @@ const Request = require('../common/request');
 
 class WeiboService {
 
-    toInt(data) {
-        if (!data) {
-            return 0;
-        }
-        var num = data.match(/\d+/g).join('');
-        if (num && num.length > 0) {
-            return parseInt(num);
-        }
-        return 0;
-    }
+
 
     async _down_weibo_realtimehot() {
         let self = this;
@@ -40,11 +31,11 @@ class WeiboService {
             trNodes.each((i, ele) => {
                 let tr = $(ele);
 
-                let idx = parseInt(Utils.trimToOne(tr.find('td[class="td-01 ranktop"]').text()));
+                let idx = Utils.parseInt(Utils.trimToOne(tr.find('td[class="td-01 ranktop"]').text()));
                 let a = tr.find('td[class=td-02] > a');
                 let title = Utils.trimToOne(a.text());
                 let href = Utils.trimToOne(a.attr("href"));
-                let hot = Utils.trimToOne(tr.find('td[class=td-02] > span').text());
+                let hot = Utils.parseInt(Utils.trimToOne(tr.find('td[class=td-02] > span').text()));
 
                 if (!Utils.isEmpty(title) && !Utils.isEmpty(hot)) {
                     list.push({
@@ -52,7 +43,7 @@ class WeiboService {
                         dataUrl: "https://s.weibo.com" + href,
                         dataRank: idx,
                         title: title,
-                        hotValue: self.toInt(hot)
+                        hotValue: hot
                     });
                 }
             });

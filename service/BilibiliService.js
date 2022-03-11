@@ -75,9 +75,9 @@ class BilibiliService {
             nodes.each((i, ele) => {
                 let node = $(ele);
 
-                let video_rank_idx = Utils.trimToOne(node.find("div[class='num']").text());
+                let video_rank_idx = Utils.parseInt(Utils.trimToOne(node.find("div[class='num']").text()));
                 let video_url = Utils.trimToOne(node.find("div[class='content'] > div[class=img] > a[target='_blank']").attr("href"));
-                let video_hot_value = Utils.trimToOne(node.find("div[class='content'] > div[class=info] > div[class=pts] > div").text());
+                let video_hot_value = Utils.parseInt(Utils.trimToOne(node.find("div[class='content'] > div[class=info] > div[class=pts] > div").text()));
 
                 if (!Utils.isEmpty(video_url)) {
                     let video_bid = video_url.substring(video_url.lastIndexOf("/") + 1);

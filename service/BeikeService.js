@@ -47,7 +47,7 @@ class BeikeService {
                 let price = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='unitPrice']").attr("data-price"));
                 if (!Utils.isEmpty(price)) {
                     try {
-                        price = parseInt(price);
+                        price = Utils.parseInt(price);
                     } catch (e) { }
                 }
                 var priceStr = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='unitPrice'] > span").text());
