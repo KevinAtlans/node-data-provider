@@ -1,7 +1,6 @@
 'use strict';
 
 const BASE_URL = "https://cd.ke.com/ershoufang";
-const { data } = require('cheerio/lib/api/attributes');
 const Utils = require('oen-utils');
 const UUID = require('oen-uuid');
 const Chrome = require('../common/chrome');
@@ -39,10 +38,7 @@ class BeikeService {
                 let houseInfo = Utils.trimToOne(node.find("div[class='address'] > div[class='houseInfo']").text());
                 let totalPrice = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='totalPrice']").text());
                 if (!Utils.isEmpty(totalPrice)) {
-                    totalPrice = totalPrice.replace("万", "");
-                    try {
-                        totalPrice = parseFloat(totalPrice);
-                    } catch (e) { }
+                    totalPrice = Utils.parseFloat(totalPrice);
                 }
                 let price = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='unitPrice']").attr("data-price"));
                 if (!Utils.isEmpty(price)) {
