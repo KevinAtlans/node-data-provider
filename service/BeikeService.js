@@ -10,10 +10,9 @@ class BeikeService {
     async _save_to_server(datas) {
         if (datas) {
             for (let data of datas) {
-                console.log(data);
-                // Utils.safeRun(() => {
-                //     Request.postWithBase("beike-house", data);
-                // });
+                Utils.safeRun(() => {
+                    Request.postWithBase("beike-house", data);
+                });
             }
         }
     }
