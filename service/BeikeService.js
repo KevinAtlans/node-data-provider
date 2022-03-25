@@ -10,9 +10,10 @@ class BeikeService {
     async _save_to_server(datas) {
         if (datas) {
             for (let data of datas) {
-                Utils.safeRun(() => {
-                    Request.postWithBase("beike-house", data);
-                });
+                console.log(data);
+                // Utils.safeRun(() => {
+                //     Request.postWithBase("beike-house", data);
+                // });
             }
         }
     }
@@ -36,22 +37,23 @@ class BeikeService {
                 let title = Utils.trimToOne(node.find("div[class='title'] > a").text());
                 let address = Utils.trimToOne(node.find("div[class='address'] > div[class='flood'] > div[class='positionInfo'] > a").text());
                 let houseInfo = Utils.trimToOne(node.find("div[class='address'] > div[class='houseInfo']").text());
-                let totalPrice = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='totalPrice']").text());
+                let totalPrice = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='totalPrice totalPrice2']").text());
                 if (!Utils.isEmpty(totalPrice)) {
+                    let needWan = totalPrice.includes("万");
                     totalPrice = Utils.parseFloat(totalPrice);
-                }
-                let price = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='unitPrice']").attr("data-price"));
-                if (!Utils.isEmpty(price)) {
-                    try {
-                        price = Utils.parseInt(price);
-                    } catch (e) { }
+                    if (needWan) {
+                        totalPrice = totalPrice * 10000;
+                    }
                 }
                 var priceStr = Utils.trimToOne(node.find("div[class='address'] > div[class='priceInfo'] > div[class='unitPrice'] > span").text());
                 if (!Utils.isEmpty(priceStr)) {
                     priceStr = priceStr.replace("单价", "");
                     priceStr = priceStr.replace("参考价:", "");
                 }
-
+                let price = "";
+                if (!Utils.isEmpty(priceStr)) {
+                    price = Utils.parseInt(priceStr);
+                }
                 list.push({
                     dataOrigin: "BEIKE",
                     dataUrl: href,
