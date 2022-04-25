@@ -24,6 +24,8 @@ class SegmentfaultService {
         }
         data.author = selector.find("div[class~=align-items-center] > div[class~=d-flex] > a[class~=d-flex] > strong[class~=align-self-center]").text();
         data.content = selector.find("article[class~='article']").html();
+        data.dataOrigin = "segmentfault";
+        data.dataUrl = data.url;
         this._save_to_server(data);
     }
 
