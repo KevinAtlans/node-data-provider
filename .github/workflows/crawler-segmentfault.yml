@@ -4,7 +4,7 @@ name: segmentfault-provider
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/50 * * * *'
+    - cron: '* */3 * * *'
 
 jobs:
   weibo-hot-job:

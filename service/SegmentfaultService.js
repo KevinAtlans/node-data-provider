@@ -65,17 +65,15 @@ class SegmentfaultService {
     }
 
     async down() {
-        await this._down_list(BASE_URL + "/blogs/newest");
-
-        // for (var i = 1; i < 10; i++) {
-        //     try {
-        //         await Utils.sleep(UUID.random(10000, 50000));
-        //         let url = BASE_URL+ "/blogs/newest" + (i == 1 ? "" : ("?page=" + i));
-        //         await this._down_list(url);
-        //     } catch (e) {
-        //         console.error(e);
-        //     }
-        // }
+        for (var i = 1; i < 10; i++) {
+            try {
+                await Utils.sleep(UUID.random(10000, 50000));
+                let url = BASE_URL + "/blogs/newest" + (i == 1 ? "" : ("?page=" + i));
+                await this._down_list(url);
+            } catch (e) {
+                console.error(e);
+            }
+        }
     }
 }
 
