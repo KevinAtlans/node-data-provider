@@ -100,10 +100,12 @@ class AvdAliyunService {
             trs.each((i, ele) => {
                 let tr = $(ele);
                 let a = tr.find("td[nowrap=nowrap] > a[target=_blank]");
+                let href = a.attr("href");
+                let avdId = href.replace("/detail?id=", "");
                 list.push({
                     dataOrigin: 'avd.aliyun.com',
-                    dataUrl: 'https://avd.aliyun.com' + a.attr("href"),
-                    avdId: Utils.trimAll(a.text()),
+                    dataUrl: 'https://avd.aliyun.com' + href,
+                    avdId: avdId,
                 });
             });
         }
