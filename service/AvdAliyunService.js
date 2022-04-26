@@ -1,6 +1,7 @@
 'use strict';
 
 const Utils = require('oen-utils');
+const UUID = require('oen-uuid');
 const Chrome = require('../common/chrome');
 const Request = require('../common/request');
 
