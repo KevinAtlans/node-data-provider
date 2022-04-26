@@ -7,7 +7,7 @@ on:
     - cron: '* */3 * * *'
 
 jobs:
-  weibo-hot-job:
+  segmentfault-job:
 
     runs-on: ubuntu-latest
 
