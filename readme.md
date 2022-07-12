@@ -12,3 +12,7 @@ yum install ipa-gothic-fonts xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11
 const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
 
 ```
+
+## Changelog
+
+* 2022-07-12
