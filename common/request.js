@@ -33,6 +33,9 @@ class Request {
             return null;
         }
 
+        data.origin = data.dataOrigin;
+        data.url = data.dataUrl;
+
         let json = JSON.stringify(data);
         console.log("Post Type: " + type + " : " + json)
         return await Request.post(BASE_URL, HEADER_TOKEN, { type: type, data: json })

@@ -18,11 +18,10 @@ class BaiduService {
         if (trNodes) {
             trNodes.each((i, ele) => {
                 let tr = $(ele);
-                console.log(tr.text())
                 let a = tr.find("a[class^=img-wrapper]");
                 let idx = Utils.parseInt(Utils.trimToOne(a.find('div[class^=index]').text()));
                 let title = Utils.trimToOne(tr.find('div[class^=content] > a[class^=title] > div[class=c-single-text-ellipsis]').text());
-                let content = Utils.trimToOne(tr.find('div[class^=content] > div[class^=hot-desc]').text());
+                let content = Utils.trimToOne(tr.find('div[class^=content] > div[class^=hot-desc]').first().text());
                 let href = Utils.trimToOne(a.attr("href"));
                 let hot = Utils.parseInt(Utils.trimToOne(tr.find('div[class^=trend] > div[class^=hot-index]').text()));
                 if (!Utils.isEmpty(title)) {
@@ -31,7 +30,7 @@ class BaiduService {
                         dataRank: idx,
                         title: title,
                         dataUrl: href,
-                        content: content,
+                        content: content?.replaceAll("查看更多>", ""),
                         hotValue: hot
                     });
                 }
@@ -206,7 +205,6 @@ class BaiduService {
                 let newData = await this._down_data_detail(data);
                 if (!Utils.isEmpty(newData)) {
                     Utils.safeRun(() => {
-                        console.log(newData);
                         Request.postWithBase("baidu-news", newData);
                     });
                 }
