@@ -8,7 +8,7 @@ class Request {
             method: 'POST',
             body: JSON.stringify(data),
             data: data,
-            headers: { 'Content-Type': 'application/json', 'ALADDIN_LAMP_TOKEN': token },
+            headers: { 'Content-Type': 'application/json', 'api-token': token },
         }).then((res) => res.json())
             .then((res) => {
                 console.log(res);
