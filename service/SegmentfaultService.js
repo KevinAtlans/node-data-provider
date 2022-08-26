@@ -14,7 +14,7 @@ class SegmentfaultService {
     }
 
     async _down_detail_page(data) {
-        if (!data) {
+        if (!data || !data.title) {
             return;
         }
         let mainBodySelector = "div[class~=article-content] > div[class=row] > div > div[class='mb-4 card'] > div[class~=card-body]";
@@ -54,11 +54,13 @@ class SegmentfaultService {
         if (liNodes) {
             liNodes.each((i, ele) => {
                 let li = $(ele);
-                let a = li.find("div[class=content] > h5 > a");
-                list.push({
-                    title: a.text(),
-                    url: BASE_URL + a.attr("href")
-                })
+                let a = li.find("div[class=content] > h3 > a");
+                if (a) {
+                    list.push({
+                        title: a.text(),
+                        url: BASE_URL + a.attr("href")
+                    });
+                }
             });
         }
         await this._down_list_data(list);
