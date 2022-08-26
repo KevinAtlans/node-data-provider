@@ -23,7 +23,7 @@ class BaiduService {
                 let title = Utils.trimToOne(tr.find('div[class^=content] > a[class^=title] > div[class=c-single-text-ellipsis]').text());
                 let content = Utils.trimToOne(tr.find('div[class^=content] > div[class^=hot-desc]').first().text());
                 if (content) {
-                    content = content.replaceAll("查看更多>", "");
+                    content = Utils.replaceAll("查看更多>", "", content);
                 }
                 let href = Utils.trimToOne(a.attr("href"));
                 let hot = Utils.parseInt(Utils.trimToOne(tr.find('div[class^=trend] > div[class^=hot-index]').text()));
