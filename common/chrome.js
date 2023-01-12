@@ -5,15 +5,29 @@ const puppeteer = require('puppeteer');
 const Utils = require('oen-utils');
 const UUID = require('oen-uuid');
 
+const WINDOW_WIDTH = 1920;
+const WINDOW_HEIGHT = 4320;
+
 /**
  * https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v9.1.1&show=api-class-puppeteer
  * 
  * 
  * ps aux | grep chrome-linux | grep -v grep | awk '{print $2}' | xargs kill -9
+ * 
+ * clickEventList=[{
+ *      sleep: 2000,
+ *      selector: '',
+ *      type: 'click',
+ * },{
+ *      sleep: 3000,
+ *      selector: '',
+ *      type: 'input',
+ *      text: 'content'
+ * }]
  */
 class Chrome {
-    static async downSelector(url, waitForSelector) {
-        let page = await Chrome.down(url, waitForSelector);
+    static async downSelector(url, waitForSelector, eventList, iframe) {
+        let page = await Chrome.down(url, waitForSelector, eventList, iframe);
         if (Utils.isEmpty(page)) {
             return null;
         }
@@ -23,15 +37,21 @@ class Chrome {
         if (Utils.isEmpty(selector)) {
             return null;
         }
+        let frame = null;
+        if (page.frame) {
+            frame = cheerio.load(page.frame);
+        }
+        cheerio.load(page.html);
         return {
             $: $,
             pageUrl: page.url,
             pageTitle: page.title,
+            frame: frame,
             selector: selector
         };
     }
 
-    static async down(url, waitForSelector) {
+    static async down(url, waitForSelector, eventList, iframe) {
         if (Utils.isEmpty(url)) {
             return null;
         }
@@ -45,17 +65,21 @@ class Chrome {
                 headless: true,
                 args: [
                     '--no-sandbox',
-                    '--mute-audio',
-                    '--disable-setuid-sandbox',
                     '--no-first-run',
+                    '--mute-audio',
+                    '--disable-web-security',
+                    '--disable-setuid-sandbox',
                     '--disable-notifications',
+                    // '--disable-features=IsolateOrigins,site-per-process',
+                    `--window-size=${WINDOW_WIDTH},${WINDOW_HEIGHT}`,
                 ],
                 ignoreHTTPSErrors: true,
                 defaultViewport: {
-                    width: 1440,
-                    height: 15000,
+                    width: WINDOW_WIDTH,
+                    height: WINDOW_HEIGHT,
                 },
                 timeout: 10000,
+                slowMo: 100
             });
 
             context = await browser.createIncognitoBrowserContext();
@@ -96,6 +120,33 @@ class Chrome {
                 }
             }
 
+            await Utils.sleep(3000);
+
+            let frame = null;
+            if (iframe) {
+                let frameHandle = await page.$(iframe);
+                let contentFrame = await frameHandle.contentFrame();
+                frame = await contentFrame.content();
+            }
+
+            if (eventList && eventList.length > 0) {
+                for (let event of eventList) {
+                    if (event.selector) {
+                        let node = await page.$(event.selector);
+                        if (node) {
+                            if ('click' == event.type) {
+                                await node.click()
+                            } else if ('input' == event.type) {
+                                await node.type(event.text)
+                            }
+                        }
+                        if (event.sleep) {
+                            await Utils.sleep(event.sleep);
+                        }
+                    }
+                }
+            }
+
             let pageUrl = await page.url();
             let pageTitle = await page.title();
             let pageHtml = await page.content();
@@ -108,6 +159,7 @@ class Chrome {
                 url: pageUrl,
                 title: pageTitle,
                 html: pageHtml,
+                frame: frame,
             };
         } catch (e) {
             console.error(url, e);
