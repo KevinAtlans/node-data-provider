@@ -122,6 +122,7 @@ class Chrome {
                 await page.waitForTimeout(3000);
             } catch (e) {
                 console.log(e);
+                return null;
             }
 
             if (!Utils.isEmpty(waitForSelector)) {
