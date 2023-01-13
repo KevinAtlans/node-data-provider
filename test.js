@@ -13,5 +13,8 @@ const Utils = require('oen-utils');
     });
     Utils.safeRun(() => {
         console.log(process.env);
+    }); 
+    Utils.safeRun(() => {
+        console.log(process.env);
     });
 })();

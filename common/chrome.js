@@ -92,16 +92,13 @@ class Chrome {
                 slowMo: 100
             });
 
-            context = await browser.createIncognitoBrowserContext();
-            page = await context.newPage();
-
-            await page._client.send('Page.setDownloadBehavior', {
-                behavior: 'allow',
-                downloadPath: __dirname
-            });
+            // context = await browser.createIncognitoBrowserContext();
+            // page = await context.newPage();
+            page = await browser.newPage();
 
             await page.setJavaScriptEnabled(true);
             await page.setRequestInterception(true);
+            // await page.setDownloadBehavior("allow", __dirname);
 
             page.on('request', (interceptedRequest) => {
                 let url = interceptedRequest.url();
@@ -118,10 +115,17 @@ class Chrome {
                 console.log(any)
             });
             try {
-                await page.goto(url);
+                await page.goto(url, { waitUntil: 'domcontentloaded' });
+                await page._client.send('Page.setDownloadBehavior', {
+                    behavior: 'allow',
+                    downloadPath: __dirname
+                });
+
+                await page.waitForTimeout(4000);
             } catch (e) {
                 console.log(e);
             }
+
             if (!Utils.isEmpty(waitForSelector)) {
                 try {
                     await page.waitForSelector(waitForSelector);
@@ -130,7 +134,10 @@ class Chrome {
                     console.error(url, e);
 
                     await page.close();
-                    await context.close();
+                    if (context != null) {
+                        await context.close();
+                        console.log("Close Context: ", url);
+                    }
                     await browser.close();
 
                     return null;
@@ -169,7 +176,10 @@ class Chrome {
             let pageHtml = await page.content();
 
             await page.close();
-            await context.close();
+            if (context != null) {
+                await context.close();
+                console.log("Close Context: ", url);
+            }
             await browser.close();
 
             return {

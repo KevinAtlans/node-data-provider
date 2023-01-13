@@ -4,7 +4,7 @@ name: avd-aliyun-provider
 on:
   workflow_dispatch:
   schedule:
-    - cron: '* */3 * * *'
+    - cron: '* */12 * * *'
 
 jobs:
   avd-aliyun-job:
