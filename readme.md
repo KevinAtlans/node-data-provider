@@ -23,3 +23,4 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 
 
  // "puppeteer": "^13.5.1"
+    "puppeteer": "^19.5.2"
