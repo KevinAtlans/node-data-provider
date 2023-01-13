@@ -29,11 +29,18 @@ class Chrome {
     static async downSelector(url, waitForSelector, eventList, iframe) {
         let page = await Chrome.down(url, waitForSelector, eventList, iframe);
         if (Utils.isEmpty(page)) {
-            return null;
+            console.log("== Chrome Down Selector Fail =====================================================");
+            console.log(url);
+            console.log(downSelector);
+            console.log("== Chrome Down Selector Fail =====================================================");
+            return {
+                $: null,
+                pageUrl: null,
+                pageTitle: null,
+                frame: null,
+                selector: null
+            };
         }
-        console.log("==========================================================");
-        console.log("Page", page);
-        console.log("==========================================================");
 
         const $ = cheerio.load(page.html);
         let selector = $(waitForSelector);

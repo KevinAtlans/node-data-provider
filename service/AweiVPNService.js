@@ -24,7 +24,6 @@ class AweiVPNService {
         let mainBodySelector = "body > ytd-app > div[id=content] > ytd-page-manager > ytd-browse > ytd-two-column-browse-results-renderer > div[id=primary] > ytd-rich-grid-renderer > div[id=contents] > ytd-rich-grid-row > div[id=contents] > ytd-rich-item-renderer > div[id=content] > ytd-rich-grid-media > div[id=dismissible]";
         let { $, selector } = await Chrome.downSelector(AWEI_HOME_URL, mainBodySelector);
         if (Utils.isEmpty($) || Utils.isEmpty(selector)) {
-            console.log("Not fount ", mainBodySelector);
             return null;
         }
 
@@ -35,7 +34,6 @@ class AweiVPNService {
 
         let node = $(nodes[0]);
         let url = this.buildYoutubeUrl(Utils.trimToOne(node.attr("href")));
-        console.log(node.text());
         return url;
     }
 
@@ -58,7 +56,6 @@ class AweiVPNService {
 
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector, eventList);
         if (Utils.isEmpty($) || Utils.isEmpty(selector)) {
-            console.log("Not found");
             return null;
         }
         let descNode = $("#description-inline-expander");
@@ -114,7 +111,6 @@ class AweiVPNService {
 
         let { $, selector } = await Chrome.downSelector(data.lzUrl, mainBodySelector, eventList);
         if (Utils.isEmpty($) || Utils.isEmpty(selector)) {
-            console.log("Not found");
             return null;
         }
 
@@ -136,7 +132,6 @@ class AweiVPNService {
         let mainBodySelector = "body > div[class=d] > div[class=d2] > div[class=ifr] > iframe[class=ifr2]";
         let { $, frame } = await Chrome.downSelector(url, mainBodySelector, null, 'iframe[class=ifr2]');
         if (Utils.isEmpty($) || Utils.isEmpty(frame)) {
-            console.log("Not found");
             return null;
         }
         let main = frame("body > div[id=tourl]");
