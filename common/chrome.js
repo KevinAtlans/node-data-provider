@@ -31,6 +31,9 @@ class Chrome {
         if (Utils.isEmpty(page)) {
             return null;
         }
+        console.log("==========================================================");
+        console.log("Page", page);
+        console.log("==========================================================");
 
         const $ = cheerio.load(page.html);
         let selector = $(waitForSelector);
@@ -62,7 +65,7 @@ class Chrome {
 
         try {
             browser = await puppeteer.launch({
-                headless: true,
+                headless: false,
                 args: [
                     '--no-sandbox',
                     '--no-first-run',
@@ -102,9 +105,11 @@ class Chrome {
                 console.log(e)
                 console.log(any)
             });
-
-            await page.goto(url);
-
+            try {
+                await page.goto(url);
+            } catch (e) {
+                console.log(e);
+            }
             if (!Utils.isEmpty(waitForSelector)) {
                 try {
                     await page.waitForSelector(waitForSelector);
