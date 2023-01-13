@@ -140,7 +140,7 @@ class AweiVPNService {
     }
 
     async down_txt(url) {
-        let mainBodySelector = "body > div[class=box] > div[id=box1]";
+        let mainBodySelector = "body";
         try {
             await Chrome.downSelector(url, mainBodySelector);
         } catch (e) {
@@ -151,8 +151,7 @@ class AweiVPNService {
     }
 
     async load_file() {
-        // let dir = process.env.USERPROFILE + "/";
-        let dir = __dirname;
+        let dir = "/home/runner/work/node-data-provider/";
         console.log("load_file: ", dir);
         fs.readdir(dir, (err, files) => {
             if (err) {
@@ -175,6 +174,10 @@ class AweiVPNService {
             console.log("Can not found lzy info by : " + url);
             return;
         }
+        // let data = {
+        //     lzUrl: 'https://wwhb.lanzoux.com/b0bth1wxe',
+        //     lzPass: '146'
+        // }
         console.log("Youtube Video Data: ", data);
         let txt_url = await this._get_lzy_info(data);
         if (!txt_url) {
@@ -183,9 +186,6 @@ class AweiVPNService {
         }
         console.log("Lzy Txt Url: ", txt_url);
         let down_url = await this._get_lzy_down_info(txt_url);
-
-        // let txt_url = "https://wwhb.lanzoux.com/iCYuC0kugozg";
-        // let down_url = await this._get_lzy_down_info(txt_url);
         if (!down_url) {
             console.log("Can not found txt down load url by : ", txt_url);
             return;

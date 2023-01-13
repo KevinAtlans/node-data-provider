@@ -16,7 +16,7 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 ## 参考连接
 
 * [如何使用 GitHub Actions 和 Puppeteer 设置持续集成管道](https://www.freecodecamp.org/chinese/news/continuous-integration-with-github-actions-and-puppeteer/)
-
+* [puppeteer API](https://pptr.dev/api/puppeteer.frame)
 ## Changelog
 
 * 2022-07-12

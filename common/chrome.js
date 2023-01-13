@@ -31,7 +31,7 @@ class Chrome {
         if (Utils.isEmpty(page)) {
             console.log("== Chrome Down Selector Fail =====================================================");
             console.log(url);
-            console.log(downSelector);
+            console.log(waitForSelector);
             console.log("== Chrome Down Selector Fail =====================================================");
             return {
                 $: null,
@@ -80,7 +80,6 @@ class Chrome {
                     '--disable-web-security',
                     '--disable-setuid-sandbox',
                     '--disable-notifications',
-                    // '--disable-features=IsolateOrigins,site-per-process',
                     `--window-size=${WINDOW_WIDTH},${WINDOW_HEIGHT}`,
                 ],
                 ignoreHTTPSErrors: true,
@@ -98,7 +97,6 @@ class Chrome {
 
             await page.setJavaScriptEnabled(true);
             await page.setRequestInterception(true);
-            // await page.setDownloadBehavior("allow", __dirname);
 
             page.on('request', (interceptedRequest) => {
                 let url = interceptedRequest.url();
@@ -115,12 +113,12 @@ class Chrome {
                 console.log(any)
             });
             try {
-                await page.goto(url, { waitUntil: 'domcontentloaded' });
                 await page._client.send('Page.setDownloadBehavior', {
                     behavior: 'allow',
-                    downloadPath: __dirname
+                    downloadPath: "/home/runner/work/node-data-provider/"
                 });
 
+                await page.goto(url, { waitUntil: 'domcontentloaded' });
                 await page.waitForTimeout(4000);
             } catch (e) {
                 console.log(e);
