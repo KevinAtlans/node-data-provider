@@ -164,27 +164,28 @@ class AweiVPNService {
         });
     }
     async down() {
-        // let url = await this._get_latest_video();
-        // if (!url) {
-        //     console.log("Youtube Video can not found");
-        //     return;
-        // }
-        // console.log("Youtube Video Url: ", url);
-        // let data = await this._get_down_load_info(url);
-        // if (!data) {
-        //     console.log("Can not found lzy info by : " + url);
-        //     return;
-        // }
-        // console.log("Youtube Video Data: ", data);
-        // let txt_url = await this._get_lzy_info(data);
-        // if (!txt_url) {
-        //     console.log("Can not found txt file by : ", data);
-        //     return;
-        // }
-        // console.log("Lzy Txt Url: ", txt_url);
-        // let down_url = await this._get_lzy_down_info(txt_url);
+        let url = await this._get_latest_video();
+        if (!url) {
+            console.log("Youtube Video can not found");
+            return;
+        }
+        console.log("Youtube Video Url: ", url);
+        let data = await this._get_down_load_info(url);
+        if (!data) {
+            console.log("Can not found lzy info by : " + url);
+            return;
+        }
+        console.log("Youtube Video Data: ", data);
+        let txt_url = await this._get_lzy_info(data);
+        if (!txt_url) {
+            console.log("Can not found txt file by : ", data);
+            return;
+        }
+        console.log("Lzy Txt Url: ", txt_url);
+        let down_url = await this._get_lzy_down_info(txt_url);
 
-        let down_url = await this._get_lzy_down_info("https://wwhb.lanzoux.com/iCYuC0kugozg");
+        // let txt_url = "https://wwhb.lanzoux.com/iCYuC0kugozg";
+        // let down_url = await this._get_lzy_down_info(txt_url);
         if (!down_url) {
             console.log("Can not found txt down load url by : ", txt_url);
             return;
