@@ -152,10 +152,12 @@ class AweiVPNService {
             console.log(e);
         }
         console.log("File Down load Finished");
+        this.load_file();
     }
 
     async load_file() {
-        let dir = process.env.USERPROFILE + "/";
+        // let dir = process.env.USERPROFILE + "/";
+        let dir = "./";
         fs.readdir(dir, (err, files) => {
             if (err) {
                 throw err;
