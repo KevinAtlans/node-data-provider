@@ -152,7 +152,7 @@ class AweiVPNService {
 
     async load_file() {
         // let dir = process.env.USERPROFILE + "/";
-        let dir = "./";
+        let dir = "/home/runner/Downloads/";
         fs.readdir(dir, (err, files) => {
             if (err) {
                 throw err;

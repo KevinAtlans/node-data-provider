@@ -97,7 +97,7 @@ class Chrome {
 
             await page._client.send('Page.setDownloadBehavior', {
                 behavior: 'allow',
-                downloadPath: './'
+                downloadPath: '/home/runner/Downloads/'
             });
 
             await page.setJavaScriptEnabled(true);
