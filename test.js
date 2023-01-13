@@ -1,11 +1,16 @@
 'use strict';
 
-const Utils = require('oen-utils');
-const AweiVPNService = require('./service/AweiVPNService');
-
 (async () => {
-    let aweiVPNService = new AweiVPNService();
     Utils.safeRun(() => {
-        aweiVPNService.down();
+        console.log(process.execPath);
+    });
+    Utils.safeRun(() => {
+        console.log(__dirname);
+    });
+    Utils.safeRun(() => {
+        console.log(process.cwd());
+    });
+    Utils.safeRun(() => {
+        console.log(process.env);
     });
 })();
