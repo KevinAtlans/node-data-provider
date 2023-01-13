@@ -91,9 +91,9 @@ class Chrome {
                 slowMo: 100
             });
 
-            // context = await browser.createIncognitoBrowserContext();
-            // page = await context.newPage();
-            page = await browser.newPage();
+            context = await browser.createIncognitoBrowserContext();
+            page = await context.newPage();
+            // page = await browser.newPage();
 
             await page.setJavaScriptEnabled(true);
             await page.setRequestInterception(true);
@@ -119,7 +119,7 @@ class Chrome {
                 });
 
                 await page.goto(url, { waitUntil: 'domcontentloaded' });
-                await page.waitForTimeout(4000);
+                await page.waitForTimeout(3000);
             } catch (e) {
                 console.log(e);
             }

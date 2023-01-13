@@ -20,3 +20,6 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 ## Changelog
 
 * 2022-07-12
+
+
+ // "puppeteer": "^13.5.1"
