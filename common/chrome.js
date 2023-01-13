@@ -95,6 +95,11 @@ class Chrome {
             context = await browser.createIncognitoBrowserContext();
             page = await context.newPage();
 
+            await page._client.send('Page.setDownloadBehavior', {
+                behavior: 'allow',
+                downloadPath: './'
+            });
+
             await page.setJavaScriptEnabled(true);
             await page.setRequestInterception(true);
 
