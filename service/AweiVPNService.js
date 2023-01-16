@@ -142,13 +142,17 @@ class AweiVPNService {
     async down_txt(url) {
         let mainBodySelector = "body";
         try {
-            await Chrome.downSelector(url, mainBodySelector);
+            let { $ } = await Chrome.downSelector(url, mainBodySelector);
+            if (!Utils.isEmpty($)) {
+                console.log($.html());
+            }
         } catch (e) {
             console.log(e);
         }
         console.log("File Down load Finished");
-        await Utils.sleep(5000);
-        this.load_file();
+
+        // await Utils.sleep(5000);
+        // this.load_file();
     }
 
     load_file(dir) {
@@ -161,10 +165,12 @@ class AweiVPNService {
             if (err) {
                 throw err;
             }
+
             files.forEach((file) => {
                 if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
                     var stat = fs.statSync(nPath);
+                    console.log("Path: ", nPath);
                     if (file.endsWith("txt")) {
                         console.log("Path: ", nPath);
                     }
@@ -176,21 +182,19 @@ class AweiVPNService {
         });
     }
     async down() {
-        let url = await this._get_latest_video();
-        if (!url) {
-            console.log("Youtube Video can not found");
-            return;
-        }
-        console.log("Youtube Video Url: ", url);
-        let data = await this._get_down_load_info(url);
-        if (!data) {
-            console.log("Can not found lzy info by : " + url);
-            return;
-        }
-        // let data = {
-        //     lzUrl: 'https://wwhb.lanzoux.com/b0bth1wxe',
-        //     lzPass: '146'
+        // let url = await this._get_latest_video();
+        // if (!url) {
+        //     console.log("Youtube Video can not found");
+        //     return;
         // }
+        // console.log("Youtube Video Url: ", url);
+        // let data = await this._get_down_load_info(url);
+        // if (!data) {
+        //     console.log("Can not found lzy info by : " + url);
+        //     return;
+        // }
+
+        let data = { lzUrl: 'https://wwhb.lanzoux.com/b0bthefzc', lzPass: '431' }
         console.log("Youtube Video Data: ", data);
         let txt_url = await this._get_lzy_info(data);
         if (!txt_url) {

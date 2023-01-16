@@ -72,7 +72,7 @@ class Chrome {
 
         try {
             browser = await puppeteer.launch({
-                headless: true,
+                headless: false,
                 args: [
                     '--no-sandbox',
                     '--no-first-run',
@@ -91,9 +91,9 @@ class Chrome {
                 slowMo: 100
             });
 
-            context = await browser.createIncognitoBrowserContext();
-            page = await context.newPage();
-            // page = await browser.newPage();
+            // context = await browser.createIncognitoBrowserContext();
+            // page = await context.newPage();
+            page = await browser.newPage();
 
             await page.setJavaScriptEnabled(true);
             await page.setRequestInterception(true);
@@ -112,14 +112,28 @@ class Chrome {
                 console.log(e)
                 console.log(any)
             });
+
+            let setDownPath = false;
+
             try {
                 await page._client.send('Page.setDownloadBehavior', {
                     behavior: 'allow',
-                    downloadPath: "/home/runner/work/node-data-provider/"
+                    downloadPath: __dirname
                 });
+                setDownPath = true;
+            } catch (e) {
+                console.log(e);
+            }
 
+            try {
                 await page.goto(url, { waitUntil: 'domcontentloaded' });
-                await page.waitForTimeout(3000);
+                if (!setDownPath) {
+                    await page._client.send('Page.setDownloadBehavior', {
+                        behavior: 'allow',
+                        downloadPath: __dirname
+                    });
+                }
+                await Utils.sleep(2000);
             } catch (e) {
                 console.log(e);
                 return null;
