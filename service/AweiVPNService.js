@@ -152,8 +152,8 @@ class AweiVPNService {
 
     load_file(dir) {
         let self = this;
-        if (dir == null) {
-            dir = "/home/runner/work/node-data-provider/";
+        if (!dir) {
+            dir = "/home/runner/work/node-data-provider";
         }
 
         fs.readdir(dir, (err, files) => {
