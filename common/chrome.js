@@ -72,7 +72,7 @@ class Chrome {
 
         try {
             browser = await puppeteer.launch({
-                headless: false,
+                headless: true,
                 args: [
                     '--no-sandbox',
                     '--no-first-run',
