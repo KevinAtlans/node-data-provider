@@ -17,6 +17,9 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 
 * [如何使用 GitHub Actions 和 Puppeteer 设置持续集成管道](https://www.freecodecamp.org/chinese/news/continuous-integration-with-github-actions-and-puppeteer/)
 * [puppeteer API](https://pptr.dev/api/puppeteer.frame)
+* [Github / Gitlab Actions 中的 cron 格式 和设置方法](https://blog.csdn.net/Ximerr/article/details/123501772)
+
+
 ## Changelog
 
 * 2022-07-12
