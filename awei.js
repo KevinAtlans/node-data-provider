@@ -7,6 +7,6 @@ const AweiVPNService = require('./service/AweiVPNService');
     let aweiVPNService = new AweiVPNService();
     Utils.safeRun(() => {
         aweiVPNService.load_file();
-        aweiVPNService.down();
+        // aweiVPNService.down();
     });
 })();

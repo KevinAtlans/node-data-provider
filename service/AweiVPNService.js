@@ -150,15 +150,25 @@ class AweiVPNService {
         this.load_file();
     }
 
-    async load_file() {
-        let dir = "/home/runner/work/node-data-provider/";
-        console.log("load_file: ", dir);
+    load_file(dir) {
+        let self = this;
+        if (dir == null) {
+            // dir = "/home/runner/work/node-data-provider/";
+        }
         fs.readdir(dir, (err, files) => {
             if (err) {
                 throw err;
             }
-            files.forEach(file => {
-                console.log(file);
+            files.forEach((file) => {
+                if (file && "node_modules" != file && !file.startsWith(".")) {
+                    let nPath = dir + "/" + file;
+                    console.log(nPath);
+                    var stat = fs.statSync(nPath);
+                    console.log(nPath, stat.isFile());
+                    if (!stat.isFile()) {
+                        self.load_file(nPath);
+                    }
+                }
             });
         });
     }
