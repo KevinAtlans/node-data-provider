@@ -158,7 +158,7 @@ class AweiVPNService {
     load_file(dir) {
         let self = this;
         if (!dir) {
-            dir = "/";
+            dir = "/home/runner";
         }
 
         fs.readdir(dir, (err, files) => {
@@ -170,8 +170,7 @@ class AweiVPNService {
                 if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
                     var stat = fs.statSync(nPath);
-                    console.log("Path: ", nPath);
-                    if (file.endsWith("txt")) {
+                    if (file.endsWith("apk")) {
                         console.log("Path: ", nPath);
                     }
                     if (!stat.isFile()) {
