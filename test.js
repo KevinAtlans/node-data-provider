@@ -10,7 +10,8 @@ const AweiVPNService = require('./service/AweiVPNService');
     Utils.safeRun(() => {
         console.log(__dirname);
     });
-    Chrome.down("https://lf9-apk.ugapk.cn/package/apk/aweme/1015_240001/aweme_aweGW_v1015_240001_b721_1673449179.apk?v=1673449203");
+    Chrome.down("https://telegram.org/dl/android/apk");
+
 
     let aweiVPNService = new AweiVPNService();
     Utils.safeRun(() => {
