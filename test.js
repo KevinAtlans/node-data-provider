@@ -10,7 +10,7 @@ const AweiVPNService = require('./service/AweiVPNService');
     Utils.safeRun(() => {
         console.log(__dirname);
     });
-    Chrome.down("https://telegram.org/dl/android/apk");
+    Chrome.down("https://telegram.org/dl/android/apk", "body");
 
 
     let aweiVPNService = new AweiVPNService();

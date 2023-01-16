@@ -170,7 +170,7 @@ class AweiVPNService {
                 if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
                     var stat = fs.statSync(nPath);
-                    if (file.endsWith("apk")) {
+                    if (file.includes("apk")) {
                         console.log("Path: ", nPath);
                     }
                     if (!stat.isFile()) {
