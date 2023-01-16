@@ -147,6 +147,7 @@ class AweiVPNService {
             console.log(e);
         }
         console.log("File Down load Finished");
+        await Utils.sleep(5000);
         this.load_file();
     }
 
