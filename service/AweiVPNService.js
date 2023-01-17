@@ -175,7 +175,7 @@ class AweiVPNService {
             }
 
             files.forEach((file) => {
-                if (file && "node_modules" != file && !file.startsWith(".")) {
+                if (file && "node_modules" != file && file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
                     console.log("Path: ", nPath);
 
@@ -212,9 +212,11 @@ class AweiVPNService {
         //     console.log("Can not found txt down load url by : ", txt_url);
         //     return;
         // }
-        let down_url = "https://developer.lanzoug.com/file/?BWNaZAo7BzYBCAY+VGFSPltkBz9TOlNpBeZb5QXzA3QCMAe1XIwGxwC+B9tThQXjVo4EuFU7AS1WYAQ0UehT3QWyWiAKvgfLAegGtFS8Usxb5gelU51TtwWIW90FdwN2AnoHJFwnBjQAPwc9U2IFW1ZlBGVVNwE6VmYEOlE8U2IFNFo5CmYHdQExBiNUPVJhWzQHMlM7U2IFJFstBSkDPwIwB2BcMwZhAHkHYVM2BStWPQQ2VSUBYlZjBDtROlMwBWNabwo0BzcBbgZkVGFSMlswB2FTNFNkBTBbZAVuA2ECZAdlXGIGZQBjB2BTZQUyVmgEMFVoAS1WJQR6UXlTdAVwWn4KMgchAT4GNFQ9UmRbNgcxUz5TYAUyW3sFLQNrAm8HNVxnBm8AZwdnUzAFN1Y1BDVVPgE1VmcEMVEjU3wFI1prCjsHJAFqBmFUNlJkWzIHO1M4U2IFNFtuBW4DJAJ3ByBcdgZvAGcHZ1MwBTdWNQQzVTMBN1ZhBDNRK1MnBWxafQpqB2cBeQZiVDJSZFsvBzJTIlNnBTQ=";
-        console.log("Lzy Down Url: ", down_url);
-        await this.down_txt(down_url);
+        // let down_url = "https://developer.lanzoug.com/file/?BWNaZAo7BzYBCAY+VGFSPltkBz9TOlNpBeZb5QXzA3QCMAe1XIwGxwC+B9tThQXjVo4EuFU7AS1WYAQ0UehT3QWyWiAKvgfLAegGtFS8Usxb5gelU51TtwWIW90FdwN2AnoHJFwnBjQAPwc9U2IFW1ZlBGVVNwE6VmYEOlE8U2IFNFo5CmYHdQExBiNUPVJhWzQHMlM7U2IFJFstBSkDPwIwB2BcMwZhAHkHYVM2BStWPQQ2VSUBYlZjBDtROlMwBWNabwo0BzcBbgZkVGFSMlswB2FTNFNkBTBbZAVuA2ECZAdlXGIGZQBjB2BTZQUyVmgEMFVoAS1WJQR6UXlTdAVwWn4KMgchAT4GNFQ9UmRbNgcxUz5TYAUyW3sFLQNrAm8HNVxnBm8AZwdnUzAFN1Y1BDVVPgE1VmcEMVEjU3wFI1prCjsHJAFqBmFUNlJkWzIHO1M4U2IFNFtuBW4DJAJ3ByBcdgZvAGcHZ1MwBTdWNQQzVTMBN1ZhBDNRK1MnBWxafQpqB2cBeQZiVDJSZFsvBzJTIlNnBTQ=";
+        // console.log("Lzy Down Url: ", down_url);
+        // await this.down_txt(down_url);
+
+        this.load_file();
     }
 }
 
