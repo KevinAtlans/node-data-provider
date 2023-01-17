@@ -140,12 +140,20 @@ class AweiVPNService {
     }
 
     async down_txt(url) {
-        let mainBodySelector = "body";
         try {
+            let mainBodySelector = "body";
             let { $ } = await Chrome.downSelector(url, mainBodySelector);
-            if (!Utils.isEmpty($)) {
-                console.log($.html());
+            if (Utils.isEmpty($)) {
+                return null;
             }
+
+            let script = $("script");
+
+            console.log("========================================================================================");
+            console.log($.html());
+            console.log("========================================================================================");
+            console.log(script.html());
+            console.log("========================================================================================");
         } catch (e) {
             console.log(e);
         }
@@ -158,7 +166,7 @@ class AweiVPNService {
     load_file(dir) {
         let self = this;
         if (!dir) {
-            dir = "/home/runner";
+            dir = "/home/runner/";
         }
 
         fs.readdir(dir, (err, files) => {
@@ -169,10 +177,9 @@ class AweiVPNService {
             files.forEach((file) => {
                 if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
+                    console.log("Path: ", nPath);
+
                     var stat = fs.statSync(nPath);
-                    if (file.includes("txt")) {
-                        console.log("Path: ", nPath);
-                    }
                     if (!stat.isFile()) {
                         self.load_file(nPath);
                     }
@@ -181,30 +188,31 @@ class AweiVPNService {
         });
     }
     async down() {
-        let url = await this._get_latest_video();
-        if (!url) {
-            console.log("Youtube Video can not found");
-            return;
-        }
-        console.log("Youtube Video Url: ", url);
-        let data = await this._get_down_load_info(url);
-        if (!data) {
-            console.log("Can not found lzy info by : " + url);
-            return;
-        }
-        // let data = { lzUrl: 'https://wwhb.lanzoux.com/b0bthefzc', lzPass: '431' }
-        console.log("Youtube Video Data: ", data);
-        let txt_url = await this._get_lzy_info(data);
-        if (!txt_url) {
-            console.log("Can not found txt file by : ", data);
-            return;
-        }
-        console.log("Lzy Txt Url: ", txt_url);
-        let down_url = await this._get_lzy_down_info(txt_url);
-        if (!down_url) {
-            console.log("Can not found txt down load url by : ", txt_url);
-            return;
-        }
+        // let url = await this._get_latest_video();
+        // if (!url) {
+        //     console.log("Youtube Video can not found");
+        //     return;
+        // }
+        // console.log("Youtube Video Url: ", url);
+        // let data = await this._get_down_load_info(url);
+        // if (!data) {
+        //     console.log("Can not found lzy info by : " + url);
+        //     return;
+        // }
+        // // let data = { lzUrl: 'https://wwhb.lanzoux.com/b0bthefzc', lzPass: '431' }
+        // console.log("Youtube Video Data: ", data);
+        // let txt_url = await this._get_lzy_info(data);
+        // if (!txt_url) {
+        //     console.log("Can not found txt file by : ", data);
+        //     return;
+        // }
+        // console.log("Lzy Txt Url: ", txt_url);
+        // let down_url = await this._get_lzy_down_info(txt_url);
+        // if (!down_url) {
+        //     console.log("Can not found txt down load url by : ", txt_url);
+        //     return;
+        // }
+        let down_url = "https://developer.lanzoug.com/file/?BWNaZAo7BzYBCAY+VGFSPltkBz9TOlNpBeZb5QXzA3QCMAe1XIwGxwC+B9tThQXjVo4EuFU7AS1WYAQ0UehT3QWyWiAKvgfLAegGtFS8Usxb5gelU51TtwWIW90FdwN2AnoHJFwnBjQAPwc9U2IFW1ZlBGVVNwE6VmYEOlE8U2IFNFo5CmYHdQExBiNUPVJhWzQHMlM7U2IFJFstBSkDPwIwB2BcMwZhAHkHYVM2BStWPQQ2VSUBYlZjBDtROlMwBWNabwo0BzcBbgZkVGFSMlswB2FTNFNkBTBbZAVuA2ECZAdlXGIGZQBjB2BTZQUyVmgEMFVoAS1WJQR6UXlTdAVwWn4KMgchAT4GNFQ9UmRbNgcxUz5TYAUyW3sFLQNrAm8HNVxnBm8AZwdnUzAFN1Y1BDVVPgE1VmcEMVEjU3wFI1prCjsHJAFqBmFUNlJkWzIHO1M4U2IFNFtuBW4DJAJ3ByBcdgZvAGcHZ1MwBTdWNQQzVTMBN1ZhBDNRK1MnBWxafQpqB2cBeQZiVDJSZFsvBzJTIlNnBTQ=";
         console.log("Lzy Down Url: ", down_url);
         await this.down_txt(down_url);
     }
