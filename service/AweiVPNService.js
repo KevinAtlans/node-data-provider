@@ -181,7 +181,11 @@ class AweiVPNService {
 
                     var stat = fs.statSync(nPath);
                     if (!stat.isFile()) {
-                        self.load_file(nPath);
+                        try {
+                            self.load_file(nPath);
+                        } catch (e) {
+                            console.log(e);
+                        }
                     }
                 }
             });
@@ -215,8 +219,11 @@ class AweiVPNService {
         // let down_url = "https://developer.lanzoug.com/file/?BWNaZAo7BzYBCAY+VGFSPltkBz9TOlNpBeZb5QXzA3QCMAe1XIwGxwC+B9tThQXjVo4EuFU7AS1WYAQ0UehT3QWyWiAKvgfLAegGtFS8Usxb5gelU51TtwWIW90FdwN2AnoHJFwnBjQAPwc9U2IFW1ZlBGVVNwE6VmYEOlE8U2IFNFo5CmYHdQExBiNUPVJhWzQHMlM7U2IFJFstBSkDPwIwB2BcMwZhAHkHYVM2BStWPQQ2VSUBYlZjBDtROlMwBWNabwo0BzcBbgZkVGFSMlswB2FTNFNkBTBbZAVuA2ECZAdlXGIGZQBjB2BTZQUyVmgEMFVoAS1WJQR6UXlTdAVwWn4KMgchAT4GNFQ9UmRbNgcxUz5TYAUyW3sFLQNrAm8HNVxnBm8AZwdnUzAFN1Y1BDVVPgE1VmcEMVEjU3wFI1prCjsHJAFqBmFUNlJkWzIHO1M4U2IFNFtuBW4DJAJ3ByBcdgZvAGcHZ1MwBTdWNQQzVTMBN1ZhBDNRK1MnBWxafQpqB2cBeQZiVDJSZFsvBzJTIlNnBTQ=";
         // console.log("Lzy Down Url: ", down_url);
         // await this.down_txt(down_url);
-
-        this.load_file();
+        try {
+            this.load_file();
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 
