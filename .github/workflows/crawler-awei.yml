@@ -3,8 +3,6 @@ name: awei-vpn-provider
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '15 0/6 * * *'
 
 jobs:
   awei-vpn-job:
