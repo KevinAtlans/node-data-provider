@@ -126,7 +126,9 @@ class Chrome {
             }
 
             try {
-                await page.goto(url, { waitUntil: 'domcontentloaded' });
+                // await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+                await page.goto(url);
                 if (!setDownPath) {
                     await page._client.send('Page.setDownloadBehavior', {
                         behavior: 'allow',
