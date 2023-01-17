@@ -158,15 +158,12 @@ class AweiVPNService {
             console.log(e);
         }
         console.log("File Down load Finished");
-
-        await Utils.sleep(5000);
-        this.load_file();
     }
 
     load_file(dir) {
         let self = this;
         if (!dir) {
-            dir = "/";
+            dir = "/home";
         }
 
         fs.readdir(dir, (err, files) => {
@@ -177,8 +174,6 @@ class AweiVPNService {
             files.forEach((file) => {
                 if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
-                    console.log("Path: ", nPath);
-
                     var stat = fs.statSync(nPath);
                     if (!stat.isFile()) {
                         try {
@@ -216,14 +211,10 @@ class AweiVPNService {
         //     console.log("Can not found txt down load url by : ", txt_url);
         //     return;
         // }
-        // let down_url = "https://developer.lanzoug.com/file/?BWNaZAo7BzYBCAY+VGFSPltkBz9TOlNpBeZb5QXzA3QCMAe1XIwGxwC+B9tThQXjVo4EuFU7AS1WYAQ0UehT3QWyWiAKvgfLAegGtFS8Usxb5gelU51TtwWIW90FdwN2AnoHJFwnBjQAPwc9U2IFW1ZlBGVVNwE6VmYEOlE8U2IFNFo5CmYHdQExBiNUPVJhWzQHMlM7U2IFJFstBSkDPwIwB2BcMwZhAHkHYVM2BStWPQQ2VSUBYlZjBDtROlMwBWNabwo0BzcBbgZkVGFSMlswB2FTNFNkBTBbZAVuA2ECZAdlXGIGZQBjB2BTZQUyVmgEMFVoAS1WJQR6UXlTdAVwWn4KMgchAT4GNFQ9UmRbNgcxUz5TYAUyW3sFLQNrAm8HNVxnBm8AZwdnUzAFN1Y1BDVVPgE1VmcEMVEjU3wFI1prCjsHJAFqBmFUNlJkWzIHO1M4U2IFNFtuBW4DJAJ3ByBcdgZvAGcHZ1MwBTdWNQQzVTMBN1ZhBDNRK1MnBWxafQpqB2cBeQZiVDJSZFsvBzJTIlNnBTQ=";
-        // console.log("Lzy Down Url: ", down_url);
-        // await this.down_txt(down_url);
-        try {
-            this.load_file();
-        } catch (e) {
-            console.log(e);
-        }
+        let down_url = "https://developer.lanzoug.com/file/?UzVWaAw9Dj8IAVNrV2ICbgQ7AjpUPQo7C+hb5VWjWi0JOwe1CNgFxFPtC9cK3F27V48EuFM9BytQZgc0B74Bj1PkViwMuA7CCOFT4Ve/ApwEuQKgVJoK7guGW91VJ1ovCXEHJAhzBTdTbAsxCjtdA1dkBGVTMQc8UGAHNwdiATZTZ1YzDGkOfAg4U3ZXPgIxBG8CMFQ9CjwLKlstVXlaZgk7B2AIZwViUyoLbQpvXXNXPAQ3UyMHYFAyB2UHOgE2U2tWOAxgDmIIOlMzV2ICNgRvAmJUPwo7C2lbbVU5Wj8JOQc0CGQFaVNgC2QKPF1lV2gEM1M5BytQIwd5By8BJlMmVnIMNA4oCDdTYVc+AjQEaQI0VDkKOQs8W3tVfVoyCWQHNQgzBWxTNAtrCmldb1c0BDVTOwc1UGQHNwd1AS5TdVZnDD0OLQhjUzRXNQI0BG0CPlQ/Cj0LNFtrVT1afQl8ByAIIgVsUzQLawppXW9XNQQ0Uz8HM1BuBzQHfQF1UzpWcQxsDmsIb1MyVy0CMgRtAj5UJQo5Cz9bc1U4WmoJOw==";
+
+        console.log("Lzy Down Url: ", down_url);
+        await this.down_txt(down_url);
     }
 }
 
