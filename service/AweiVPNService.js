@@ -158,12 +158,14 @@ class AweiVPNService {
             console.log(e);
         }
         console.log("File Down load Finished");
+
+        this.load_file();
     }
 
     load_file(dir) {
         let self = this;
         if (!dir) {
-            dir = "/home";
+            dir = __dirname;
         }
 
         fs.readdir(dir, (err, files) => {
@@ -172,15 +174,12 @@ class AweiVPNService {
             }
 
             files.forEach((file) => {
-                if (file && "node_modules" != file && !file.startsWith(".")) {
+                if (file && "node_modules" != file) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
+                    console.log("FilePath : ", nPath);
                     var stat = fs.statSync(nPath);
                     if (!stat.isFile()) {
-                        try {
-                            self.load_file(nPath);
-                        } catch (e) {
-                            console.log(e);
-                        }
+                        self.load_file(nPath);
                     }
                 }
             });
