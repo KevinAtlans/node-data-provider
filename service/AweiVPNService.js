@@ -151,8 +151,8 @@ class AweiVPNService {
         }
         console.log("File Down load Finished");
 
-        // await Utils.sleep(5000);
-        // this.load_file();
+        await Utils.sleep(5000);
+        this.load_file();
     }
 
     load_file(dir) {
@@ -170,7 +170,7 @@ class AweiVPNService {
                 if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
                     var stat = fs.statSync(nPath);
-                    if (file.includes("apk")) {
+                    if (file.includes("txt")) {
                         console.log("Path: ", nPath);
                     }
                     if (!stat.isFile()) {
@@ -181,19 +181,18 @@ class AweiVPNService {
         });
     }
     async down() {
-        // let url = await this._get_latest_video();
-        // if (!url) {
-        //     console.log("Youtube Video can not found");
-        //     return;
-        // }
-        // console.log("Youtube Video Url: ", url);
-        // let data = await this._get_down_load_info(url);
-        // if (!data) {
-        //     console.log("Can not found lzy info by : " + url);
-        //     return;
-        // }
-
-        let data = { lzUrl: 'https://wwhb.lanzoux.com/b0bthefzc', lzPass: '431' }
+        let url = await this._get_latest_video();
+        if (!url) {
+            console.log("Youtube Video can not found");
+            return;
+        }
+        console.log("Youtube Video Url: ", url);
+        let data = await this._get_down_load_info(url);
+        if (!data) {
+            console.log("Can not found lzy info by : " + url);
+            return;
+        }
+        // let data = { lzUrl: 'https://wwhb.lanzoux.com/b0bthefzc', lzPass: '431' }
         console.log("Youtube Video Data: ", data);
         let txt_url = await this._get_lzy_info(data);
         if (!txt_url) {
