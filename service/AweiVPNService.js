@@ -166,7 +166,7 @@ class AweiVPNService {
     load_file(dir) {
         let self = this;
         if (!dir) {
-            dir = "/home/runner/";
+            dir = "/";
         }
 
         fs.readdir(dir, (err, files) => {
@@ -175,7 +175,7 @@ class AweiVPNService {
             }
 
             files.forEach((file) => {
-                if (file && "node_modules" != file && file.startsWith(".")) {
+                if (file && "node_modules" != file && !file.startsWith(".")) {
                     let nPath = dir + (dir.endsWith("/") ? "" : "/") + file;
                     console.log("Path: ", nPath);
 
