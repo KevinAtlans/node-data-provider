@@ -178,6 +178,8 @@ class Chrome {
                             } else if ('input' == event.type) {
                                 await node.type(event.text)
                             }
+                        } else {
+                            console.log("Can not found event selector: ", event.selector);
                         }
                         if (event.sleep) {
                             await Utils.sleep(event.sleep);
