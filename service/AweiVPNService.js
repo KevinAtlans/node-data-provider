@@ -41,6 +41,10 @@ class AweiVPNService {
         let mainBodySelector = "body > ytd-app > div[id=content] > ytd-page-manager > ytd-watch-flexy > div[id=columns] > div[id=primary] > div[id=primary-inner] > div[id=below] > ytd-watch-metadata > div[id=above-the-fold]";
         let eventList = [{
             sleep: 10000,
+            selector: '#content > div.body.style-scope.ytd-consent-bump-v2-lightbox > div.eom-buttons.style-scope.ytd-consent-bump-v2-lightbox > div:nth-child(1) > ytd-button-renderer:nth-child(2) > yt-button-shape > button',
+            type: 'click',
+        }, {
+            sleep: 3000,
             selector: 'tp-yt-paper-button[id=expand]',
             type: 'click',
         }, {
