@@ -55,7 +55,9 @@ class Request {
             console.error("未配置提交认证TOKEN，提交失败！");
             return null;
         }
-        console.log("Post Type: " + type + " : " + json)
+
+        console.log("Post Type: " + action + " : " + JSON.stringify(data));
+
         return await Request.post(BASE_URL + action, HEADER_TOKEN, data)
     }
 }

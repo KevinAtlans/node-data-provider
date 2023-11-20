@@ -31,7 +31,7 @@ async function fetchByLink(link, isBase64) {
     let data = await fetch(link, { method: 'GET' }).then(res => res.text()).then(text => text).catch(reason => { console.error(reason); return null; });
     if (isBase64) {
         try {
-            data = atob(data);
+            data = Buffer.from(data, 'base64').toString('utf8');
         } catch (e) {
             console.error(data, e);
         }
