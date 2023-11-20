@@ -2,6 +2,7 @@
 
 const Utils = require('oen-utils');
 const Request = require('./common/request');
+const fetch = require('node-fetch');
 
 const domain_list = [
     { "url": "https://sub.sharecentre.online/sub", "base64": true },
