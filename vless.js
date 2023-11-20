@@ -40,24 +40,23 @@ async function fetchByLink(link, isBase64) {
 }
 
 (async () => {
-    let list = [];
     for (let domain of domain_list) {
         try {
+            let list = [];
             let ss = await fetchByLink(domain.url, domain.base64);
             for (let s of ss) {
                 if (s && s.length > 10 && !list.includes(s)) {
                     list.push(s);
                 }
             }
+            Utils.safeRun(() => {
+                Request.postWithAction("/system/admin/proxy-vpn/add-links", {
+                    key: '123',
+                    links: list
+                });
+            });
         } catch (e) {
             console.error(JSON.stringify(domain), e);
         }
     }
-
-    Utils.safeRun(() => {
-        Request.postWithAction("/system/admin/proxy-vpn/add-links", {
-            key: '123',
-            links: list
-        });
-    });
 })();
