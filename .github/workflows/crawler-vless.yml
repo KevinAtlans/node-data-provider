@@ -7,7 +7,7 @@ on:
     - cron: '30 */6 * * *'
 
 jobs:
-  bilibili-video-job:
+  github-vless-provider:
 
     runs-on: ubuntu-latest
 

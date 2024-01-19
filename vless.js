@@ -50,7 +50,7 @@ async function fetchByLink(link, isBase64) {
                 }
             }
             Utils.safeRun(() => {
-                Request.postWithAction("/system/admin/proxy-vpn/add-links", {
+                Request.postWithAction("/front/proxy-vpn/add-links", {
                     key: '123',
                     links: list
                 });
