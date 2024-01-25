@@ -3,8 +3,8 @@ name: beike-house-provider
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '30 */6 * * *'
+  schedule:
+    - cron: '30 */6 * * *'
 
 jobs:
   beike-house-job:

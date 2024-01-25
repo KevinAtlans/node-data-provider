@@ -3,8 +3,8 @@ name: weibo-hot-provider
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '30 0/2 * * *'
+  schedule:
+    - cron: '30 0/2 * * *'
 
 jobs:
   weibo-hot-job:

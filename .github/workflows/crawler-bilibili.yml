@@ -3,8 +3,8 @@ name: bilibili-video-provider
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '30 0/2 * * *'
+  schedule:
+    - cron: '30 0/2 * * *'
 
 jobs:
   bilibili-video-job:
