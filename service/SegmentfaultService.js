@@ -9,7 +9,12 @@ const Request = require('../common/request');
 class SegmentfaultService {
     async _save_to_server(data) {
         Utils.safeRun(() => {
-            Request.postWithBase("segmentfault", data);
+            Request.postWithAction("/front/crawler/save", {
+                type: 'segmentfault',
+                url: data.dataUrl,
+                origin: 'segmentfault.com',
+                data: JSON.stringify(data)
+            });
         });
     }
 

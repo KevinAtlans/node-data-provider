@@ -159,7 +159,12 @@ class BilibiliService {
             let newData = await this._down_video_detail(data);
             if (!Utils.isEmpty(newData)) {
                 Utils.safeRun(() => {
-                    Request.postWithBase("bilibili-video", newData);
+                    Request.postWithAction("/front/crawler/save", {
+                        type: 'VideoBilibili',
+                        url: newData.dataUrl,
+                        origin: 'www.bilibili.com',
+                        data: JSON.stringify(newData)
+                    });
                 });
             }
         }

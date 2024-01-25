@@ -89,7 +89,12 @@ class WeiboService {
             if (!Utils.isEmpty(newData)) {
                 Utils.safeRun(() => {
                     console.log(newData);
-                    Request.postWithBase("weibo-news", newData);
+                    Request.postWithAction("/front/crawler/save", {
+                        type: 'weibo',
+                        url: newData.dataUrl,
+                        origin: 'weibo.com',
+                        data: JSON.stringify(newData)
+                    });
                 });
             }
         }

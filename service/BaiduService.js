@@ -208,7 +208,12 @@ class BaiduService {
                 let newData = await this._down_data_detail(data);
                 if (!Utils.isEmpty(newData)) {
                     Utils.safeRun(() => {
-                        Request.postWithBase("baidu-news", newData);
+                        Request.postWithAction("/front/crawler/save", {
+                            type: 'News',
+                            url: newData.dataUrl,
+                            origin: newData.dataUrl,
+                            data: JSON.stringify(newData)
+                        });
                     });
                 }
             } catch (e) {

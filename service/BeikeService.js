@@ -11,7 +11,12 @@ class BeikeService {
         if (datas) {
             for (let data of datas) {
                 Utils.safeRun(() => {
-                    Request.postWithBase("beike-house", data);
+                    Request.postWithAction("/front/crawler/save", {
+                        type: 'BeiKeHouse',
+                        url: data.dataUrl,
+                        origin: 'cd.ke.com',
+                        data: JSON.stringify(data)
+                    });
                 });
             }
         }

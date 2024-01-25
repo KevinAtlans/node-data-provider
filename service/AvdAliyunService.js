@@ -35,7 +35,12 @@ class AvdAliyunService {
             return;
         }
         Utils.safeRun(() => {
-            Request.postWithBase("avd.aliyun.com", data);
+            Request.postWithAction("/front/crawler/save", {
+                type: 'AvdAliYun',
+                url: data.dataUrl,
+                origin: 'avd.aliyun.com',
+                data: JSON.stringify(data)
+            });
         });
     }
 
