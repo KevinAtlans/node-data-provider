@@ -19,11 +19,12 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 * [puppeteer API](https://pptr.dev/api/puppeteer.frame)
 * [Github / Gitlab Actions 中的 cron 格式 和设置方法](https://blog.csdn.net/Ximerr/article/details/123501772)
 
-
 ## Changelog
 
 * 2022-07-12
 
+// "puppeteer": "^13.5.1"
+// "puppeteer": "^19.5.2"
 
- // "puppeteer": "^13.5.1"
-    "puppeteer": "^19.5.2"
+git config --global --unset http.proxy
+git config --global http.proxy http://127.0.0.1:10809
