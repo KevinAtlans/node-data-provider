@@ -208,7 +208,7 @@ class BaiduService {
                 let newData = await this._down_data_detail(data);
                 if (!Utils.isEmpty(newData)) {
                     Utils.safeRun(() => {
-                        Request.postWithAction("/front/crawler/save", {
+                        Request.postWithAction("/front/crawler/crawler/save", {
                             type: 'News',
                             url: newData.dataUrl,
                             origin: newData.dataUrl,

@@ -11,7 +11,7 @@ class BeikeService {
         if (datas) {
             for (let data of datas) {
                 Utils.safeRun(() => {
-                    Request.postWithAction("/front/crawler/save", {
+                    Request.postWithAction("/front/crawler/crawler/save", {
                         type: 'BeiKeHouse',
                         url: data.dataUrl,
                         origin: 'cd.ke.com',

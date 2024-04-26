@@ -89,7 +89,7 @@ class WeiboService {
             if (!Utils.isEmpty(newData)) {
                 Utils.safeRun(() => {
                     console.log(newData);
-                    Request.postWithAction("/front/crawler/save", {
+                    Request.postWithAction("/front/crawler/crawler/save", {
                         type: 'weibo',
                         url: newData.dataUrl,
                         origin: 'weibo.com',

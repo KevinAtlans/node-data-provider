@@ -35,7 +35,7 @@ class AvdAliyunService {
             return;
         }
         Utils.safeRun(() => {
-            Request.postWithAction("/front/crawler/save", {
+            Request.postWithAction("/front/crawler/crawler/save", {
                 type: 'AvdAliYun',
                 url: data.dataUrl,
                 origin: 'avd.aliyun.com',
