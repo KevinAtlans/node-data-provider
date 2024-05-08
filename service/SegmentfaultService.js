@@ -22,13 +22,14 @@ class SegmentfaultService {
         if (!data || !data.title) {
             return;
         }
-        let mainBodySelector = "div[class~=article-content] > div[class=row] > div > div[class='mb-4 card'] > div[class~=card-body]";
-        let { selector } = await Chrome.downSelector(data.url, mainBodySelector);
+        let mainBodySelector = "div[id=__next] > div[class~=bg-white] > div[class~=container]";
+        let { selector,pageTitle } = await Chrome.downSelector(data.url, mainBodySelector);
         if (Utils.isEmpty(selector)) {
             return;
         }
-        data.author = selector.find("div[class~=align-items-center] > div[class~=d-flex] > a[class~=d-flex] > strong[class~=align-self-center]").text();
-        data.content = selector.find("article[class~='article']").html();
+        data.title = pageTitle;
+        data.author = selector.find("div[class~=container] > div:nth-child(1) > div[class~=mx-auto] > div[class~=d-flex] > div[class~=d-flex] > a[class~=d-flex] > div[class~=d-flex]  > div[class~=d-flex] > strong[class=font-size-14]").text();
+        data.content = selector.find("div[class~=container] > div:nth-child(2) > div[class~=mx-auto] > div").html();
         data.dataOrigin = "segmentfault";
         data.dataUrl = data.url;
         this._save_to_server(data);
@@ -49,7 +50,8 @@ class SegmentfaultService {
 
     async _down_list(url) {
         console.log("Download Url => " + url);
-        let mainBodySelector = "div[class=row] > div[class=col] > div[class=row] > div[class='middle-wrap col'] > div[class=content-list-wrap] > div[class='list-card-bg  card']";
+        
+        let mainBodySelector = "div[class=row] > div > div[class=grid] > div > div[class=content-list-wrap] > div[class='list-card-bg  card']";
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
         if (Utils.isEmpty(selector)) {
             return;
@@ -59,7 +61,7 @@ class SegmentfaultService {
         if (liNodes) {
             liNodes.each((i, ele) => {
                 let li = $(ele);
-                let a = li.find("div[class=content] > h3 > a");
+                let a = li.find("div > div[class=left] > h3 > a");
                 if (a) {
                     list.push({
                         title: a.text(),
