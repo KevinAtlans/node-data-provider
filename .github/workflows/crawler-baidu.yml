@@ -4,7 +4,7 @@ name: baidu-news-provider
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 0/4 * * *'
+    - cron: '30 0/6 * * *'
 
 jobs:
   baidu-news-job:
