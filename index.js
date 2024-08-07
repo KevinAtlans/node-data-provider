@@ -1,5 +1,6 @@
-'use strict';
+"use strict";
 
 (async () => {
-    console.log("Hello Node");
+  let a = (undefined || "asd").replace("a", "");
+  console.log("Hello Node", a);
 })();
