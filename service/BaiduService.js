@@ -205,7 +205,8 @@ class BaiduService {
 
         for (let data of list) {
             try {
-                let newData = await this._down_data_detail(data);
+                // let newData = await this._down_data_detail(data);
+                let newData = data;
                 if (!Utils.isEmpty(newData)) {
                     Utils.safeRun(() => {
                         Request.postWithAction("/front/crawler/crawler/save", {

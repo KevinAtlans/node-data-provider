@@ -21,8 +21,8 @@ class SegmentfaultService {
     async _down_detail_page(data) {
         if (!data || !data.title) {
             return;
-        }
-        let mainBodySelector = "div[id=__next] > div[class~=bg-white] > div[class~=container]";
+        } 
+        let mainBodySelector = "div[id=__next] > div.bg-white.py-5";
         let { selector,pageTitle } = await Chrome.downSelector(data.url, mainBodySelector);
         if (Utils.isEmpty(selector)) {
             return;
@@ -50,8 +50,7 @@ class SegmentfaultService {
 
     async _down_list(url) {
         console.log("Download Url => " + url);
-        
-        let mainBodySelector = "div[class=row] > div > div[class=grid] > div > div[class=content-list-wrap] > div[class='list-card-bg  card']";
+        let mainBodySelector = "div.blogs-content.mb-5.pt-4.container > div > div.col > div.content-list-wrap > div";
         let { $, selector } = await Chrome.downSelector(url, mainBodySelector);
         if (Utils.isEmpty(selector)) {
             return;
@@ -74,7 +73,7 @@ class SegmentfaultService {
     }
 
     async down() {
-        for (var i = 1; i < 10; i++) {
+        for (var i = 1; i < 5; i++) {
             try {
                 await Utils.sleep(UUID.random(10000, 50000));
                 let url = BASE_URL + "/blogs/newest" + (i == 1 ? "" : ("?page=" + i));

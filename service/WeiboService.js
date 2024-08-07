@@ -85,7 +85,8 @@ class WeiboService {
             return;
         }
         for (let data of list) {
-            let newData = await this._down_data_detail(data);
+            // let newData = await this._down_data_detail(data);
+            let newData = data;
             if (!Utils.isEmpty(newData)) {
                 Utils.safeRun(() => {
                     console.log(newData);
