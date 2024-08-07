@@ -27,6 +27,7 @@ class SegmentfaultService {
         if (Utils.isEmpty(selector)) {
             return;
         }
+        console.log(pageTitle);
         data.title = (pageTitle || "").replace("- SegmentFault 思否","");
         data.author = selector.find("div[class~=container] > div:nth-child(1) > div[class~=mx-auto] > div[class~=d-flex] > div[class~=d-flex] > a[class~=d-flex] > div[class~=d-flex]  > div[class~=d-flex] > strong[class=font-size-14]").text();
         data.content = selector.find("div[class~=container] > div:nth-child(2) > div[class~=mx-auto] > div").html();
