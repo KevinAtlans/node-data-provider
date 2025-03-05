@@ -3,8 +3,8 @@ name: segmentfault-provider
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '5 */12 * * *'
+  # schedule:
+  #   - cron: '5 */12 * * *'
 
 jobs:
   segmentfault-job:
