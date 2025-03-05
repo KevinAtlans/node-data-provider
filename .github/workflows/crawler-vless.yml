@@ -34,13 +34,13 @@ jobs:
         registry-url: https://registry.npmjs.org
         scope: '@octocat'
 
-    - name: Cache Node.js modules
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.OS }}-node-
+    # - name: Cache Node.js modules
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: ~/.npm
+    #     key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+    #     restore-keys: |
+    #       ${{ runner.OS }}-node-
 
     - name: Install dependencies
       run: npm install
