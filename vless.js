@@ -50,9 +50,8 @@ async function fetchByLink(link, isBase64) {
                 }
             }
             Utils.safeRun(() => {
-                Request.postWithAction("/front/vpn/proxy/add-links", {
-                    key: '123',
-                    links: list
+                Request.postWithAction("/single/proxy-vpn/add-links", {
+                    source: list
                 });
             });
         } catch (e) {
