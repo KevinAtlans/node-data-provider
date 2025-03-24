@@ -13,6 +13,7 @@ const domain_list = [
     { "url": "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2", "base64": true },
     { "url": "https://raw.githubusercontent.com/freefq/free/master/v2", "base64": true },
     { "url": "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub", "base64": true },
+    { "url": "https://proxy.v2gh.com/https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub", "base64": true },
     { "url": "https://raw.githubusercontent.com/w1770946466/Auto_proxy/main/Long_term_subscription1", "base64": true },
     { "url": "https://raw.githubusercontent.com/w1770946466/Auto_proxy/main/Long_term_subscription2", "base64": true },
     { "url": "https://raw.githubusercontent.com/w1770946466/Auto_proxy/main/Long_term_subscription3", "base64": true },
